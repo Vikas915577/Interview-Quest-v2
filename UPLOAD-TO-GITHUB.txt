@@ -1,0 +1,22 @@
+INTERVIEW QUEST UPDATE — UPLOAD GUIDE
+
+The ZIP includes the updated project files at its root. Upload/replace these files in the root of your existing GitHub repository:
+
+1. index.html
+2. style.css
+3. app.js
+4. question-bank.js (NEW FILE)
+5. sw.js
+6. manifest.webmanifest
+7. icon.svg
+8. README.md
+9. TEST-REPORT.md
+
+Do not upload them inside an extra nested folder. Keep them beside each other at repository root.
+
+GitHub Pages check:
+Repository → Settings → Pages → Deploy from a branch → main → /(root) → Save.
+
+After the deployment finishes, open the GitHub Pages URL. If the old interface remains visible, hard refresh and clear the site's cached data because this app uses a service worker.
+
+The app saves progress and bookmarks only in the current browser. There is no account sync/database in this static release.
