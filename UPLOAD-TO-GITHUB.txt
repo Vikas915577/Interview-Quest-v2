@@ -1,14 +1,20 @@
-INTERVIEW QUEST V3 — PHONE UPLOAD
+INTERVIEW QUEST V3.1 — UPLOAD FROM PHONE
 
-1. Download and extract Interview-Quest-v3.zip on your phone.
-2. Open your GitHub repository in a browser.
-3. Upload the CONTENTS of the extracted folder into the repository ROOT (main branch); do not create an extra nested folder.
-4. Replace the existing app files with the V3 files:
-   index.html, style.css, app.js, question-bank.js, sw.js, manifest.webmanifest, icon.svg, README.md, TEST-REPORT.md, validate-question-bank.js, smoke-test.js.
-5. Open Settings -> Pages. Source should be branch main and folder /(root).
-6. Wait until GitHub Pages reports the deployment is complete, then open the published site.
-7. If you still see the old bank, close the installed PWA, fully reload the browser tab and clear site data only if necessary.
+1. Download and extract Interview-Quest-v3.1.zip.
+2. Open your GitHub repository in a browser and choose Add file -> Upload files.
+3. Upload the extracted FOLDER CONTENTS to the repository ROOT (main branch), not as a nested folder.
+4. Replace the existing app files. IMPORTANT: upload sql-lab.js too.
+5. Commit changes to main.
+6. Open Settings -> Pages and confirm source is branch main, folder /(root).
+7. Open the live site after deployment and verify the Questions page says 500 and Practice -> SQL Practice shows sample tables plus 20 exercises.
+8. If the old version remains, close any installed PWA, hard-refresh, and check that the browser is using the new deployed files.
 
-FREE/NO-KEY NOTE: The static app and all local features do not need a paid backend or OpenAI API key. The Ask ChatGPT shortcut opens the official ChatGPT website. It is not an embedded chat, and prompt prefilling depends on browser/site behavior.
+This is a free static app; no API key is required for its core features. SQL examples are study prompts and are not executed in the browser. ChatGPT opens separately.
 
-VALIDATION: Run `node validate-question-bank.js`, `node smoke-test.js` and `node --check app.js` / `node --check question-bank.js` / `node --check sw.js` when Node.js is available.
+Run checks when Node.js is available:
+node validate-question-bank.js
+node smoke-test.js
+node --check app.js
+node --check question-bank.js
+node --check sql-lab.js
+node --check sw.js

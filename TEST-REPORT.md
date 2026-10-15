@@ -1,30 +1,26 @@
-# Interview Quest V3 — Test Report
+# Interview Quest V3.1 — Test Report
 
 Test date: 2026-10-15
 
 ## Automated checks
 
-- **PASS** — `node --check app.js`
-- **PASS** — `node --check question-bank.js`
-- **PASS** — `node --check sw.js`
-- **PASS** — `node validate-question-bank.js`: 300 records, 300 unique IDs, 300 unique question texts, 13 categories and 7 role labels
-- **PASS** — all required question fields are present; supported difficulty and type values are used; every question has role metadata; any provided topic reference uses HTTPS
-- **PASS** — original question IDs `iq-001` through `iq-100` remain in their original order; V3 additions follow from `iq-101`
-- **PASS** — required role/topic/difficulty/type filters and the question-bank load-error message exist in HTML; the question-bank script loads before `app.js`
-- **PASS** — `node smoke-test.js`: app initialization rendered 300 cards; target-role and topic filters narrowed results; a simulated missing bank displayed the load-error fallback
-- **PASS** — local HTTP server returned status 200 for `index.html`, `style.css`, `app.js`, `question-bank.js`, `sw.js`, `manifest.webmanifest`, `icon.svg`, `README.md`, `TEST-REPORT.md`, `validate-question-bank.js` and `smoke-test.js`
-- **PASS** — service-worker cache name is `interview-quest-v3` and includes the primary app files; old `interview-quest-*` caches are removed on activation
-- **PASS** — `manifest.webmanifest` parses as valid JSON
-- **PASS** — existing `interviewQuest.v1` localStorage key is retained so prior practice history and bookmarks can still be read
+- PASS — `node --check app.js`
+- PASS — `node --check question-bank.js`
+- PASS — `node --check sql-lab.js`
+- PASS — `node --check sw.js`
+- PASS — question bank validation: 500 non-empty question records, unique IDs, unique question text, 13 categories, and 7 role labels.
+- PASS — preserved legacy IDs `iq-001` through `iq-100`; added records start at `iq-301`.
+- PASS — SQL Lab data validation: 4 sample tables, all rows match table schemas, 20 unique exercises with tasks, hints, solutions, explanations and expected checks.
+- PASS — smoke test: app renders 500 question cards, role/topic filters narrow results, SQL module renders all tables and 20 exercise cards, saved-attempt textareas are present, roadmap has 10 entries, and the missing-bank warning appears if question data is unavailable.
+- PASS — HTML loads question bank and SQL Lab scripts before `app.js`; service worker cache is versioned as `interview-quest-v3-1` and includes `sql-lab.js`.
+- PASS — web manifest parses as JSON.
 
-## Not yet verified
+## Not verified here
 
-- **UNTESTED** — full visual/manual testing on a real Android phone and desktop browser
-- **UNTESTED** — published GitHub Pages deployment after V3 files are uploaded; the local test does not prove that the online site is updated
-- **UNTESTED** — actual ChatGPT app hand-off and prompt prefill on every Android browser; ChatGPT's `?q=` behavior is not a guaranteed public integration contract
-- **UNTESTED** — fresh-install/offline PWA behavior on a physical phone
-- **UNTESTED** — correctness of every suggested answer in a specific employer's interview; candidates should verify tool- and database-version-specific details against current documentation
+- NOT TESTED — live GitHub Pages deployment and Android phone visual testing. The package must be uploaded to the repository root and deployment must complete before the published website changes.
+- NOT TESTED — SQL statements are not executed in the browser. Users can write and save attempts, then reveal/copy example solutions; correctness can be checked in a local SQL database.
+- NOT TESTED — actual ChatGPT prompt prefill on every Android browser.
 
-## Known scope limits
+## Scope and privacy
 
-The app is a static frontend. Local bookmarks, practice history and XP do not sync between devices. It does not use a paid backend, does not call the OpenAI API, and does not embed a ChatGPT conversation. The ChatGPT shortcut opens the official website and attempts to copy a contextual prompt as a fallback. A working internet connection is needed for the first full load and external ChatGPT use.
+No paid API key is required. SQL attempts, bookmarks and progress are stored in local browser storage on the current device; there is no cross-device sync. Sample rows are fictional practice data.

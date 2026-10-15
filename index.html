@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#101827" />
   <meta name="description" content="Interview Quest: mobile-first interview preparation, question bank, mock interviews and one-click ChatGPT support." />
-  <title>Interview Quest V3 — 300 Interview Questions</title>
+  <title>Interview Quest V3.1 — 500 Questions + SQL Lab</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
@@ -53,8 +53,8 @@
       </section>
 
       <section id="questions-view" class="view" aria-labelledby="questions-title">
-        <div class="page-heading"><p class="kicker">SEARCHABLE LEARNING LIBRARY</p><h1 id="questions-title">Interview question bank</h1><p>300 curated questions across 13 topics. Role, difficulty, topic aur question type ke hisaab se filter karo; answers, tips aur follow-ups se practice karo. Saved questions isi browser mein store hote hain.</p></div>
-        <div class="bank-summary"><div><strong id="bank-total">300</strong><span>curated questions</span></div><div><strong id="bank-saved-count">0</strong><span>saved for revision</span></div><div><strong id="bank-visible-count">300</strong><span>currently shown</span></div></div>
+        <div class="page-heading"><p class="kicker">SEARCHABLE LEARNING LIBRARY</p><h1 id="questions-title">Interview question bank</h1><p>500 curated questions across 13 topics. Role, difficulty, topic aur type se filter karo. SQL Lab mein sample tables ke saath 20 query exercises aur roadmap bhi hai. Saved questions isi browser mein store hote hain.</p></div>
+        <div class="bank-summary"><div><strong id="bank-total">500</strong><span>curated questions</span></div><div><strong id="bank-saved-count">0</strong><span>saved for revision</span></div><div><strong id="bank-visible-count">500</strong><span>currently shown</span></div></div>
         <label class="search-box"><span aria-hidden="true">⌕</span><input id="question-search" type="search" placeholder="Search a question, answer, keyword..." autocomplete="off" /><kbd>/</kbd></label>
         <div class="filter-grid">
           <label>Target role<select id="question-role"><option value="all">All roles</option></select></label>
@@ -75,7 +75,7 @@
       </section>
 
       <section id="plan-view" class="view" aria-labelledby="plan-title">
-        <div class="page-heading"><p class="kicker">SMALL DAILY WINS</p><h1 id="plan-title">7-day quick-start plan</h1><p>Roz thoda practice. Job applications bhi saath-saath continue rakho.</p></div>
+        <div class="page-heading"><p class="kicker">SMALL DAILY WINS</p><h1 id="plan-title">10-day interview roadmap</h1><p>Pehle SQL basics se start karo, phir joins, BI tools, Python, resume aur full mock interview tak step-by-step jao.</p></div>
         <div id="plan-list" class="plan-list"></div>
         <div class="plain-note"><strong>Remember:</strong> Ye focused preparation plan hai, job guarantee nahi. Har interview aur company's requirements alag hoti hain.</div>
       </section>
@@ -93,13 +93,14 @@
       <button class="nav-item active" data-tab="home" type="button"><span>⌂</span><small>Home</small></button>
       <button class="nav-item" data-tab="practice" type="button"><span>▦</span><small>Practice</small></button>
       <button class="nav-item" data-tab="questions" type="button"><span>☷</span><small>Questions</small></button>
-      <button class="nav-item" data-tab="plan" type="button"><span>◷</span><small>7-day plan</small></button>
+      <button class="nav-item" data-tab="plan" type="button"><span>◷</span><small>Roadmap</small></button>
       <button class="nav-item" data-tab="progress" type="button"><span>↗</span><small>Progress</small></button>
     </nav>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="question-bank.js"></script>
+  <script src="sql-lab.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

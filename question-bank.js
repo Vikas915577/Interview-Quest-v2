@@ -1918,6 +1918,1810 @@
 ];
   rows.push(...expandedRows);
 
+  const v31Rows = [
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Using employees, write a query to return only name and salary.",
+    "SELECT name, salary FROM employees; returns exactly those two columns for every employee row.",
+    "Select only the columns the business question needs.",
+    "How would you include only employees in Delhi?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Using employees, find people whose salary is at least 60000.",
+    "SELECT name, salary FROM employees WHERE salary >= 60000; filters rows before displaying them.",
+    "Check whether the requirement says greater than or greater than or equal to.",
+    "How would you sort the result from highest salary?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "List all different cities present in employees.",
+    "SELECT DISTINCT city FROM employees; returns each selected city once.",
+    "DISTINCT applies to the selected column combination.",
+    "How can you count the number of distinct cities?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Show the five highest-paid employees.",
+    "SELECT name, salary FROM employees ORDER BY salary DESC LIMIT 5; is a common syntax in PostgreSQL, MySQL and SQLite.",
+    "Some databases use TOP or FETCH instead of LIMIT.",
+    "How do you handle ties at the fifth position?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Count all rows in the employees table.",
+    "SELECT COUNT(*) AS employee_count FROM employees; counts rows, including rows with NULL values in individual columns.",
+    "COUNT(*) and COUNT(column) behave differently when a column is NULL.",
+    "How would you count employees with a non-null department_id?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Find the average salary for all employees.",
+    "SELECT AVG(salary) AS average_salary FROM employees; ignores NULL salary values.",
+    "Confirm whether NULL salaries should be excluded or treated as zero.",
+    "How would you round the answer to two decimal places?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Find employees whose city is Delhi or Noida.",
+    "SELECT * FROM employees WHERE city IN ('Delhi', 'Noida'); is a compact alternative to two OR comparisons.",
+    "Text values need quotes; be consistent about spelling and case.",
+    "How do you find employees not in those two cities?"
+  ],
+  [
+    "SQL",
+    "Beginner",
+    "Practical",
+    "Find employees whose name starts with A.",
+    "SELECT * FROM employees WHERE name LIKE 'A%'; uses % for any sequence of characters.",
+    "LIKE case sensitivity differs by database/collation.",
+    "How would you find names ending in a?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Count employees in each city and show the largest cities first.",
+    "SELECT city, COUNT(*) AS employee_count FROM employees GROUP BY city ORDER BY employee_count DESC; groups rows by city.",
+    "Aliases can often be used in ORDER BY, but syntax can vary by database.",
+    "How do you keep only cities with at least two employees?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Show departments that have at least two employees.",
+    "SELECT department_id, COUNT(*) AS headcount FROM employees WHERE department_id IS NOT NULL GROUP BY department_id HAVING COUNT(*) >= 2; filters groups with HAVING.",
+    "WHERE filters rows; HAVING filters grouped results.",
+    "What changes if NULL department_id must be treated as its own group?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Return each employee with the readable department name.",
+    "SELECT e.name, d.department_name FROM employees e LEFT JOIN departments d ON e.department_id = d.department_id; retains employees even when no department matches.",
+    "Use a LEFT JOIN when unmatched employee rows must remain.",
+    "How could you find only employees without a matched department?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "List customers who have never placed an order.",
+    "SELECT c.customer_id, c.customer_name FROM customers c WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id); returns customers without a match.",
+    "NOT EXISTS avoids multiplying customer rows when many orders exist.",
+    "How would you do this with a LEFT JOIN?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Show each customer and total value of their paid orders, including customers with none.",
+    "SELECT c.customer_id, c.customer_name, COALESCE(SUM(CASE WHEN o.status = 'Paid' THEN o.amount ELSE 0 END), 0) AS paid_total FROM customers c LEFT JOIN orders o ON o.customer_id = c.customer_id GROUP BY c.customer_id, c.customer_name; includes customers with zero paid amount.",
+    "Filter paid amounts inside CASE if all customers must remain in output.",
+    "Why can putting o.status='Paid' in WHERE remove customers with no orders?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find duplicate email values in a users table.",
+    "SELECT email, COUNT(*) AS occurrences FROM users WHERE email IS NOT NULL GROUP BY email HAVING COUNT(*) > 1; identifies non-null duplicates.",
+    "Define whether case and spaces should be normalized before comparing emails.",
+    "How would you return every full user row belonging to a duplicate email?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find salary values shared by more than one employee.",
+    "SELECT salary, COUNT(*) AS employee_count FROM employees GROUP BY salary HAVING COUNT(*) > 1; lists repeated salary values.",
+    "NULL salary values may form a group; decide whether to exclude them.",
+    "How would you return names of those employees too?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find the second-highest distinct salary from employees.",
+    "SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees); returns the largest salary below the maximum.",
+    "The result is NULL if no second distinct salary exists.",
+    "How would DENSE_RANK solve this?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Create a salary label: High for 70000 or more, Mid for 50000 or more, otherwise Low.",
+    "SELECT name, salary, CASE WHEN salary >= 70000 THEN 'High' WHEN salary >= 50000 THEN 'Mid' ELSE 'Low' END AS salary_band FROM employees; tests conditions in order.",
+    "Put the most restrictive condition first.",
+    "How would NULL salary be labelled separately?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Show orders above 1000 that are not cancelled.",
+    "SELECT * FROM orders WHERE amount > 1000 AND status <> 'Cancelled'; combines conditions with AND.",
+    "If status can be NULL, <> 'Cancelled' will not include those rows by default.",
+    "How could you include NULL status values too?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Show orders placed during October 2026.",
+    "SELECT * FROM orders WHERE order_date >= '2026-10-01' AND order_date < '2026-11-01'; uses a half-open date interval.",
+    "Half-open intervals work well when order_date includes a time component.",
+    "Why can applying a function to order_date make index use harder?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find departments with no employees.",
+    "SELECT d.department_id, d.department_name FROM departments d LEFT JOIN employees e ON e.department_id = d.department_id WHERE e.employee_id IS NULL; keeps departments without a match.",
+    "Use a NOT NULL column from the right table to detect missing matches.",
+    "How would you count employees for every department, including zero?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Concept",
+    "Why can joining orders directly to order_items inflate order totals?",
+    "A single order can have several item rows, so the order amount is repeated after the join. Aggregate each table to the required grain before joining or sum line-level amounts at the correct grain.",
+    "Write down one row means what before every join.",
+    "How would you validate that the joined result has the intended grain?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Concept",
+    "What is the difference between COUNT(DISTINCT customer_id) and COUNT(customer_id)?",
+    "COUNT counts non-NULL customer_id values including repeats; COUNT(DISTINCT customer_id) counts unique non-NULL IDs.",
+    "The DISTINCT version may cost more on large data, so use it only when needed.",
+    "How do you count unique customers per month?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Calculate a running total of daily sales.",
+    "SELECT sale_date, daily_sales, SUM(daily_sales) OVER (ORDER BY sale_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_sales FROM daily_sales; computes a cumulative sum.",
+    "Aggregate to one row per date first if source has multiple sales per day.",
+    "What changes if several rows share the same date?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Return the latest order per customer.",
+    "Use ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC, order_id DESC) in a CTE, then filter rn = 1.",
+    "Add a deterministic tie-breaker when dates can match.",
+    "How would you return the latest three orders per customer?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Rank employees by salary within each department.",
+    "DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) assigns equal salaries the same rank without gaps.",
+    "Use RANK when rank gaps after ties are desired.",
+    "How does ROW_NUMBER differ for tied salaries?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Concept",
+    "When would you use a CTE instead of a nested subquery?",
+    "A CTE names an intermediate result, making multi-step logic easier to read and debug. Performance depends on the database and query plan; a CTE is not automatically faster.",
+    "Use meaningful names and avoid splitting a simple expression unnecessarily.",
+    "How would you use two CTEs to calculate and then rank monthly sales?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Practical",
+    "Calculate month-over-month sales change percentage.",
+    "Aggregate sales by month first, use LAG(month_sales) OVER (ORDER BY month_start), then calculate (month_sales - previous_month_sales) * 100.0 / NULLIF(previous_month_sales, 0).",
+    "Define how the first month and zero previous-month sales should be displayed.",
+    "What happens when previous_month_sales is zero?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Practical",
+    "Find orders whose total differs from the sum of their line items.",
+    "Aggregate order_items by order_id, join that result to orders, then filter where order_total <> item_total; use a tolerance for decimal rounding if appropriate.",
+    "Compare at the same currency and rounding precision.",
+    "How would you handle orders with no line items?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Concept",
+    "How do WHERE filters on a LEFT JOIN table affect the result?",
+    "A right-table condition in WHERE can remove unmatched NULL rows and make the result behave like an inner join. Put the condition in ON when unmatched left rows must remain.",
+    "Inspect the required output population before choosing ON or WHERE.",
+    "Show a query that keeps all customers but only joins paid orders."
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Scenario",
+    "A dashboard sales number doubles after you add a product dimension. How do you investigate?",
+    "Check join keys for uniqueness, compare row counts before and after the join, inspect one-to-many relationships, verify data grain, and aggregate the many-side table before joining if required.",
+    "Do not fix the number with DISTINCT until the cause is understood.",
+    "Which reconciliation totals would you compare?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Concept",
+    "What is a window frame in a window function?",
+    "A window frame defines which nearby rows contribute to an aggregate for the current row, such as all prior rows through the current row for a running total.",
+    "Understand the default frame for your database and specify ROWS when precise row-by-row behavior is needed.",
+    "How would you calculate a three-row moving average?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Scenario",
+    "A query is slow after data grows tenfold. What do you check first?",
+    "Inspect EXPLAIN or the database query plan, row estimates, filters and join keys, indexes, returned row volume, unnecessary columns, and whether joins create excess rows.",
+    "Measure before and after one change; do not assume an index always helps.",
+    "Which write operations can an index make slower?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Concept",
+    "What is the difference between a primary key and a unique constraint?",
+    "A primary key identifies each row and cannot be NULL; a unique constraint prevents duplicate values, with NULL behavior depending on the database.",
+    "Choose keys that match entity identity and check database-specific NULL rules.",
+    "Can a table have more than one unique constraint?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find rows where required email is missing.",
+    "SELECT * FROM customers WHERE email IS NULL OR TRIM(email) = ''; checks NULL and blank text separately.",
+    "Whitespace-only values should be considered during data quality checks.",
+    "How would you standardize case and surrounding spaces?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Find customers with at least three orders.",
+    "SELECT customer_id, COUNT(*) AS order_count FROM orders GROUP BY customer_id HAVING COUNT(*) >= 3; counts orders for each customer.",
+    "Check whether cancelled orders should count as orders for this requirement.",
+    "How could you include customers with zero orders?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Practical",
+    "Return each customer's first order date.",
+    "SELECT customer_id, MIN(order_date) AS first_order_date FROM orders GROUP BY customer_id; uses the minimum date per customer.",
+    "Confirm whether test, cancelled or deleted orders should count.",
+    "How do you calculate days from first order to latest order?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Practical",
+    "Find products whose sales exceed the average product sales.",
+    "Aggregate sales by product in a CTE, then compare each product_total with (SELECT AVG(product_total) FROM product_totals).",
+    "Average product totals, not line-level transactions, if the question asks for average by product.",
+    "What is the difference between average order value and average product sales?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Scenario",
+    "Two source tables have the same customer ID but conflicting customer names. What do you do?",
+    "Profile the conflicts, compare source ownership and timestamps, agree a survivorship rule with the business, preserve lineage, and report unresolved conflicts rather than silently choosing one.",
+    "SQL can identify the conflict; the correct business rule needs context.",
+    "How would you write a query to list the conflicting IDs?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Concept",
+    "Why should you avoid SELECT * in a production report query?",
+    "It returns unused columns, couples the query to schema changes and can move unnecessary data. Explicit columns make output and review more predictable.",
+    "Explicit column lists help when upstream tables change.",
+    "When might SELECT * be acceptable?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Practical",
+    "Extract year and month from a date for monthly grouping.",
+    "Use the database's date truncation or year/month functions, such as DATE_TRUNC('month', order_date) in PostgreSQL; syntax varies by database.",
+    "Keep a true date key when possible instead of grouping formatted text.",
+    "Why is portable SQL syntax sometimes different for date functions?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Scenario",
+    "A LEFT JOIN query still removes employees with no department. How do you debug it?",
+    "Check WHERE conditions that reference the department table; moving the condition into the JOIN's ON clause may retain unmatched employees.",
+    "Inspect the query after every added filter.",
+    "How can you test this with one employee whose department_id is NULL?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Concept",
+    "What is referential integrity?",
+    "It ensures relationships stay valid, commonly by requiring a foreign-key value to reference an existing primary or unique key, unless NULL is allowed.",
+    "Legacy databases may not enforce every intended relationship, so validate data too.",
+    "How would you find orphaned order rows if constraints are missing?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Practical",
+    "Compare row counts and totals before and after a transformation.",
+    "Calculate source and target row counts plus business totals such as SUM(amount), then compare by relevant slices and investigate mismatches.",
+    "Global totals can hide offsetting errors; reconcile by date, status or region too.",
+    "How would you design a repeatable reconciliation report?"
+  ],
+  [
+    "SQL",
+    "Intermediate",
+    "Concept",
+    "What does COALESCE do?",
+    "COALESCE returns the first non-NULL expression from its arguments, for example COALESCE(phone, alternate_phone, 'Not provided').",
+    "Do not automatically convert every NULL to zero; it changes meaning.",
+    "How does COALESCE differ from NULLIF?"
+  ],
+  [
+    "SQL",
+    "Interview",
+    "Scenario",
+    "An INNER JOIN returns fewer rows than the left table. Is it necessarily a bug?",
+    "No. INNER JOIN keeps only matching rows. Confirm that excluding unmatched left rows matches the requirement; use a LEFT JOIN to inspect unmatched records if needed.",
+    "Compare distinct keys and match rates when validating joins.",
+    "How would you calculate the percentage of customers with a match?"
+  ],
+  [
+    "Excel",
+    "Beginner",
+    "Practical",
+    "How would you flag a missing value in Excel?",
+    "Use =IF(A2=\"\",\"Missing\",\"Present\") for a simple blank check, adjusting the referenced cell and rules to the workbook.",
+    "Cells containing formulas that return an empty string may need special handling.",
+    "How do you distinguish a truly empty cell from a formula returning an empty string?"
+  ],
+  [
+    "Excel",
+    "Beginner",
+    "Concept",
+    "Which Excel reference should stay fixed when a tax rate lives in cell B1?",
+    "A2 changes when a formula is copied; $A$2 keeps both the column and row fixed. $A2 and A$2 lock only one dimension.",
+    "Use F4 in many desktop Excel versions to cycle reference styles.",
+    "When would you lock only the column?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Practical",
+    "How do you sum sales for a region and a date range?",
+    "Use SUMIFS with the sales range, region criteria and start/end date criteria, ensuring all ranges have matching dimensions.",
+    "Use a start date inclusive and an end date exclusive when timestamps exist.",
+    "How would you build the same logic using a PivotTable?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Practical",
+    "How can you prevent errors when a lookup value is absent?",
+    "Use XLOOKUP's if_not_found argument or wrap a lookup in IFNA/IFERROR when a fallback is appropriate.",
+    "Avoid hiding every error; #REF! may signal a real workbook problem.",
+    "When would IFERROR hide a problem you should investigate?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Concept",
+    "How can you reorder worksheet records without removing non-matching rows?",
+    "Sorting changes row order; filtering hides rows that do not match criteria without deleting them.",
+    "Check whether hidden rows are included in your downstream totals.",
+    "How can a filtered table be restored to show every row?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Practical",
+    "How would you find duplicate IDs in a worksheet?",
+    "Use Conditional Formatting to highlight duplicates or use COUNTIF on the ID column and filter values where the count is above one.",
+    "Decide whether duplicates are errors or legitimate repeated transactions.",
+    "How would you remove only exact duplicate rows safely?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Scenario",
+    "A PivotTable does not include newly appended rows. What do you check?",
+    "Confirm the source is an Excel Table or updated range, refresh the PivotTable, and verify that the added rows have matching column headers and data types.",
+    "Refresh after source updates; a fixed range may exclude new rows.",
+    "Why is converting a range to an Excel Table helpful?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Concept",
+    "When is Power Query better than manual cleaning?",
+    "Power Query records repeatable transformation steps for imports, type changes, trimming, splitting, merging and appending data.",
+    "Keep the raw source unchanged and document significant transformation rules.",
+    "Which cleaning steps would you automate first in a daily report?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Practical",
+    "How would you calculate percentage variance between actual and budget?",
+    "A common formula is =(Actual-Budget)/Budget, formatted as a percentage; handle zero budget separately to avoid division errors.",
+    "Confirm whether positive variance means favorable or unfavorable for the metric.",
+    "Why is cost variance interpretation different from revenue variance?"
+  ],
+  [
+    "Excel",
+    "Beginner",
+    "Concept",
+    "What does IF do?",
+    "IF tests a condition and returns one result when true and another when false, such as =IF(B2>=60,\"Pass\",\"Review\").",
+    "Keep nested logic readable; consider IFS or lookup tables for many bands.",
+    "How would you handle three score bands?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Practical",
+    "How can you combine first and last names while handling blanks?",
+    "Use TEXTJOIN with an appropriate delimiter and ignore-empty option, or combine cells with & after cleaning missing values.",
+    "Trim unwanted spaces before combining fields.",
+    "How can you remove extra spaces in a name?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Concept",
+    "What is conditional formatting useful for in reporting?",
+    "It emphasizes patterns such as overdue tasks, negative variance, thresholds or duplicates through rules, helping reviewers spot exceptions quickly.",
+    "Avoid colors alone; use labels or icons for accessibility.",
+    "How would you highlight the top 10 values?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Scenario",
+    "Two reports have different totals in Excel. How do you reconcile them?",
+    "Align date ranges, filters, metric definitions, row grain and refresh time; compare row counts, unique keys, missing IDs, duplicates and grouped totals.",
+    "Do not assume either workbook is correct until rules are aligned.",
+    "What would you include in a reconciliation checklist?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Concept",
+    "Why use structured references in Excel Tables?",
+    "Structured references use column names such as Sales[Amount], are easier to read and commonly expand as table rows are added.",
+    "Keep table and column names clear and consistent.",
+    "How can a structured reference help a reusable report?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Practical",
+    "How do you calculate a rolling seven-day total?",
+    "If data is daily and sorted, use SUM over the current row and previous six rows or a date-based SUMIFS window; choose the method based on missing dates and row grain.",
+    "Seven rows are not always seven calendar days.",
+    "How would missing dates change the formula?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Concept",
+    "What is data validation in Excel?",
+    "Data Validation limits or guides inputs, for example a drop-down of valid statuses or a rule for values between allowed bounds.",
+    "It improves entry quality but does not replace validating imported data.",
+    "How can you create a drop-down for Pending, Approved and Rejected?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Scenario",
+    "A workbook becomes slow with many volatile formulas. What can you do?",
+    "Profile the workbook, simplify repeated calculations, avoid unnecessary volatile functions, use Tables/Power Query where suitable, and reduce formulas over entire columns when not needed.",
+    "Measure workbook recalculation before making large changes.",
+    "Why can OFFSET or INDIRECT affect recalculation?"
+  ],
+  [
+    "Excel",
+    "Beginner",
+    "Concept",
+    "Which Excel functions separately count numeric cells, populated cells and blanks?",
+    "COUNT counts numeric values, COUNTA counts non-empty cells, and COUNTBLANK counts blank cells under Excel's blank-cell rules.",
+    "Text numbers may behave differently from numeric cells.",
+    "How would you count cells containing numeric-looking text?"
+  ],
+  [
+    "Excel",
+    "Interview",
+    "Practical",
+    "How would you build a daily MIS workbook that is easy to refresh?",
+    "Separate raw data, transformation steps, output/report and checks; use tables or Power Query, define a stable refresh path, and show update time and reconciliation totals.",
+    "Make exceptions visible rather than silently excluding them.",
+    "What checks should run before the report is shared?"
+  ],
+  [
+    "Excel",
+    "Intermediate",
+    "Concept",
+    "When would you choose INDEX/MATCH rather than VLOOKUP?",
+    "INDEX/MATCH is flexible when the return column is left of the lookup column or when a stable column-index approach is not desirable; XLOOKUP is another modern option.",
+    "Choose according to Excel version compatibility and workbook maintainability.",
+    "What makes XLOOKUP easier to read?"
+  ],
+  [
+    "Power BI",
+    "Beginner",
+    "Concept",
+    "What is the difference between a report and a dashboard in Power BI?",
+    "A report can contain multiple interactive pages; a dashboard in the Power BI service is generally a single canvas of pinned tiles.",
+    "The exact workflow depends on Desktop versus Service.",
+    "When would a multi-page report be more useful?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "What is the difference between a calculated column and a measure?",
+    "A calculated column is evaluated per row and stored in the model; a measure is evaluated at query time in the current filter context.",
+    "Use measures for aggregations that need to respond to slicers.",
+    "Why can a measure show different values by visual row?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "In DAX, how can selecting a region change a measure without changing the source rows?",
+    "Filter context is the set of filters affecting a measure evaluation, coming from visuals, slicers, page/report filters and DAX expressions.",
+    "Understand which filters are active before debugging a measure.",
+    "How does CALCULATE change filter context?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Practical",
+    "How would you write a basic total sales measure?",
+    "Total Sales = SUM(Sales[SalesAmount]) creates a reusable aggregate measure that responds to filters in the report.",
+    "Ensure SalesAmount is numeric and table relationships are correct.",
+    "How would you calculate year-to-date sales?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "Why is a star schema often recommended?",
+    "Dimension tables describe entities such as date, product and customer; a fact table records events or measurements. Clear relationships support analysis and can simplify DAX.",
+    "Define fact grain before designing relationships.",
+    "What could go wrong if both fact and dimension tables contain repeated keys?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Scenario",
+    "A total sales measure is too high after adding a category field. What would you inspect?",
+    "Check relationship cardinality and direction, duplicate dimension keys, fact grain and whether the visual uses a field from an unexpected table.",
+    "Compare a simple table visual and validate the underlying row counts.",
+    "How would you test a one-to-many relationship?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "What is Power Query used for?",
+    "Power Query imports and transforms data with recorded steps, such as changing types, filtering, splitting columns, merging and appending tables.",
+    "Prefer repeatable transformations to manual changes before each refresh.",
+    "What is query folding?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Concept",
+    "Why is hiding a Power BI visual not a secure way to restrict data access?",
+    "Row-level security restricts which rows a user can see according to roles and rules; access must be tested with representative users and role assignments.",
+    "Do not treat report filters as security controls.",
+    "How do you validate an RLS role?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Practical",
+    "How can you show sales for the previous year in DAX?",
+    "With a properly related date table, a measure can use CALCULATE with SAMEPERIODLASTYEAR(Date[Date]); date-table and calendar requirements must be met.",
+    "Validate fiscal calendar and incomplete-period behavior.",
+    "How would you calculate YoY percentage change?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Scenario",
+    "A report refresh fails in the Service but works on Desktop. What do you check?",
+    "Review gateway configuration, credentials, source reachability, privacy settings, data source paths, scheduled refresh details and the exact error message.",
+    "Desktop connectivity does not prove Service credentials or gateway are configured.",
+    "What information would you capture before escalating?"
+  ],
+  [
+    "Power BI",
+    "Beginner",
+    "Concept",
+    "Why are relationships important in a Power BI model?",
+    "Relationships propagate filters between related tables so measures can aggregate at the intended level.",
+    "Use key columns with compatible types and check uniqueness on the one side.",
+    "What is the risk of an ambiguous relationship path?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "What factors should guide choosing an Import model versus DirectQuery?",
+    "Import stores a copy in the model and typically gives responsive interactions; DirectQuery sends queries to the source and depends more on source performance and limitations.",
+    "Decide using freshness, data size, security, source capability and performance needs.",
+    "Can a hybrid model use more than one storage mode?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Practical",
+    "How would you design a KPI page for a manager?",
+    "Show the key outcome KPIs first, trends versus target, a small number of meaningful breakdowns and clear definitions, with filters that match decisions users need to make.",
+    "Do not add visuals merely because data is available.",
+    "What could be a useful guardrail KPI next to revenue growth?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Scenario",
+    "A slicer changes one visual but not another. How do you debug it?",
+    "Check Edit interactions, table relationships, visual-level filters, disconnected tables and whether the measure removes filters with DAX.",
+    "Test interactions with a simple measure before changing the whole model.",
+    "How might REMOVEFILTERS cause this behavior?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "What is the purpose of a dedicated date table?",
+    "A date table supplies a continuous calendar and attributes such as month, quarter and fiscal period to support time intelligence and consistent date filters.",
+    "Mark the date table where required and relate it to the right date key.",
+    "How do you handle multiple date columns such as order date and ship date?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Concept",
+    "What are common causes of a slow Power BI report?",
+    "Large or poorly designed models, high-cardinality columns, expensive DAX, inefficient visuals, source latency and unsuitable relationships can all contribute.",
+    "Use performance tools and isolate the slow visual rather than guessing.",
+    "What would you test first on a large table visual?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Practical",
+    "How do you calculate average order value?",
+    "Average Order Value = DIVIDE([Total Sales], [Order Count]); define whether count includes cancelled, returned or unpaid orders.",
+    "Use DIVIDE to handle a zero denominator more safely than direct division.",
+    "Why could average transaction value differ from average customer value?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Scenario",
+    "A report looks correct in Desktop but users see stale numbers. What do you verify?",
+    "Check published dataset/semantic model, refresh history, credentials, gateway, report connection and whether users are opening the latest workspace/app report.",
+    "Capture refresh timestamps in the report when freshness is important.",
+    "How would you separate a data issue from a deployment issue?"
+  ],
+  [
+    "Power BI",
+    "Intermediate",
+    "Concept",
+    "Why should measures have clear names and formats?",
+    "Names and formats help users understand the business definition and units, reduce confusion and make model maintenance easier.",
+    "Use percentage, currency and decimal formats consistently.",
+    "What should a KPI tooltip explain?"
+  ],
+  [
+    "Power BI",
+    "Interview",
+    "Practical",
+    "How would you validate a Power BI dashboard before release?",
+    "Reconcile headline totals to a trusted source, test filters and drill-through, inspect date coverage and blanks, verify RLS, review mobile layout and record refresh time.",
+    "Use a test checklist and have a business owner sign off on definitions.",
+    "Which checks are functional and which are data-quality checks?"
+  ],
+  [
+    "Python & Pandas",
+    "Beginner",
+    "Concept",
+    "What is the difference between a list and a dictionary?",
+    "A list stores ordered items accessed by position; a dictionary stores key-value mappings accessed by key.",
+    "Choose a dictionary when each value has a meaningful key.",
+    "How would you count occurrences of values?"
+  ],
+  [
+    "Python & Pandas",
+    "Beginner",
+    "Practical",
+    "How do you read a CSV file into pandas?",
+    "Use pd.read_csv('file.csv'), then inspect df.head(), df.shape and df.dtypes to confirm that the file was read as expected.",
+    "Set encoding, date parsing and dtypes explicitly when the source requires them.",
+    "How do you read only selected columns?"
+  ],
+  [
+    "Python & Pandas",
+    "Beginner",
+    "Practical",
+    "How do you inspect missing values by column?",
+    "Use df.isna().sum() for missing-value counts per column.",
+    "Also inspect missing percentages and whether blank text should be treated as missing.",
+    "How would you sort columns by missing count?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you remove duplicate customer records?",
+    "Use df.drop_duplicates(subset=['customer_id'], keep='last') only after deciding which record should survive.",
+    "Deduplicating by ID without a survivorship rule can discard valid updates.",
+    "How would you keep the latest updated_at record per customer?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you filter sales above 1000 for one region?",
+    "Use df[(df['sales'] > 1000) & (df['region'] == 'North')]; pandas conditions need parentheses around each comparison.",
+    "Use & and | for element-wise conditions, not Python's and/or.",
+    "How do you filter for North or South?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you group revenue by region?",
+    "Use df.groupby('region', dropna=False)['revenue'].sum().reset_index() if missing regions should remain as a group.",
+    "Decide how to handle missing group labels.",
+    "How would you calculate both sum and average?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you merge orders with a customer lookup table?",
+    "Use orders.merge(customers, on='customer_id', how='left', validate='many_to_one') when each customer key should be unique in customers.",
+    "The validate argument can catch unexpected key duplication.",
+    "How would you list orders whose customer key did not match?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Scenario",
+    "A merge doubles the number of rows. What do you check?",
+    "Inspect duplicate merge keys in the lookup table, compare key uniqueness and intended grain, use merge validation, and reconcile row counts before and after merging.",
+    "Many-to-many joins can be valid but should be intentional.",
+    "Which pandas command helps find duplicated keys?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Concept",
+    "When should a Pandas analyst select rows by label instead of position?",
+    "loc selects by labels and label-aware slices; iloc selects by integer positions.",
+    "Boolean masks are commonly used with loc for filtering.",
+    "How would you select rows 0 to 4 and columns name and salary?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How would you convert a text column to datetime safely?",
+    "Use pd.to_datetime(df['date'], errors='coerce', format=...) when a known format exists; inspect values converted to NaT.",
+    "Do not silently drop invalid dates without measuring their count.",
+    "How would you report invalid source dates?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Concept",
+    "When should you use vectorized pandas operations instead of apply?",
+    "Vectorized Series/DataFrame operations usually express bulk transformations clearly and can be faster than Python row-by-row apply.",
+    "Profile first; for complex logic apply may still be acceptable.",
+    "How would you calculate a column difference without a row loop?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you replace negative sales values with missing values for review?",
+    "Use df.loc[df['sales'] < 0, 'sales'] = pd.NA only if the business rule says negative values are invalid; otherwise negative adjustments may be legitimate.",
+    "Flag suspicious values before changing source meaning.",
+    "How would you keep a separate audit flag for the records?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Scenario",
+    "A CSV has a numeric column stored as text because of commas. What do you do?",
+    "Inspect raw values, remove approved thousands separators, convert using pd.to_numeric(errors='coerce'), then report newly invalid rows before publishing results.",
+    "Locale-specific decimal and thousands separators require care.",
+    "How can you identify the rows that failed conversion?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Concept",
+    "What is the difference between concat and merge?",
+    "concat stacks objects along an axis; merge joins datasets based on common keys or join conditions.",
+    "Appending monthly files usually uses concat; adding customer attributes usually uses merge.",
+    "What validations should follow a merge?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Practical",
+    "How would you calculate month-over-month revenue in pandas?",
+    "Convert dates to datetime, group revenue by monthly period, sort periods, then use pct_change() on the monthly total after handling zero and missing prior months.",
+    "Define calendar or fiscal month and handle zero previous values explicitly.",
+    "How would you avoid division by zero in the percentage change?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Concept",
+    "What is a pandas Series compared with a DataFrame?",
+    "A Series is a one-dimensional labelled array; a DataFrame is a two-dimensional labelled structure with columns that can hold different types.",
+    "A selected single column often returns a Series; selecting a list of columns returns a DataFrame.",
+    "How do you check DataFrame dimensions?"
+  ],
+  [
+    "Python & Pandas",
+    "Intermediate",
+    "Practical",
+    "How do you export a cleaned DataFrame without the index?",
+    "Use df.to_csv('cleaned.csv', index=False) when the DataFrame index is not a business column.",
+    "Keep a raw copy or document transformations before overwriting important files.",
+    "How would you export only selected columns?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Scenario",
+    "A Pandas notebook runs out of memory on a large CSV. What options do you consider?",
+    "Read only required columns, specify data types, process chunks with chunksize, aggregate early, or use a fit-for-purpose database or distributed engine if the data exceeds local capacity.",
+    "Chunk processing only works when the task can be designed incrementally.",
+    "How could you calculate counts across chunks?"
+  ],
+  [
+    "Python & Pandas",
+    "Beginner",
+    "Concept",
+    "How do you check column names and data types?",
+    "Use df.columns, df.dtypes and df.info() to inspect schema and non-null counts.",
+    "Check type inference after importing mixed-format data.",
+    "How would you rename an inconsistent column?"
+  ],
+  [
+    "Python & Pandas",
+    "Interview",
+    "Practical",
+    "How would you create a simple data-quality summary?",
+    "Calculate row counts, duplicate-key counts, missing counts, invalid ranges and unmatched foreign keys, then export a summary and sample exception rows.",
+    "Report both the number and percentage of affected records.",
+    "Which checks would you run before a daily KPI refresh?"
+  ],
+  [
+    "Data Analysis",
+    "Beginner",
+    "Concept",
+    "How should an analyst distinguish a measurement from an objective-linked KPI?",
+    "A metric is a measurement; a KPI is a metric chosen to evaluate progress toward an important objective, usually with a target or decision context.",
+    "Explain the business objective and target, not only the formula.",
+    "Give an example of a KPI with a guardrail metric."
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "How can two variables move together without one causing the other?",
+    "Correlation describes how variables move together; causation means a change in one variable produces a change in another, which needs stronger evidence than a simple correlation.",
+    "Consider confounders, timing and experimental design.",
+    "How could an experiment help test a causal claim?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Scenario",
+    "Revenue rises but profit falls. What would you investigate?",
+    "Break down revenue, volume, price, discounts, cost of goods, mix, refunds and operating expenses; compare against prior periods and segment by product, region and channel.",
+    "Reconcile finance definitions and investigate composition changes.",
+    "How would you separate price effect from volume effect?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "How can customers who signed up in the same month be compared over time?",
+    "Cohort analysis groups users or customers by a shared starting event or period and tracks later behavior, such as retention or spend over time.",
+    "Use consistent cohort definitions and observation windows.",
+    "How would you compare retention between signup cohorts?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Concept",
+    "What makes a metric an early warning signal rather than an outcome report?",
+    "A leading indicator can provide an early signal of future outcomes; a lagging indicator records an outcome after it occurs, such as completed monthly revenue.",
+    "A metric may be leading for one decision and weak for another.",
+    "What could lead monthly subscription churn?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Practical",
+    "How would you identify an outlier in a numeric column?",
+    "Inspect distributions and use a contextual method such as IQR or z-scores, then validate whether the record is an error or a legitimate rare event.",
+    "Do not delete an outlier solely because it is unusual.",
+    "Why might IQR be more robust than a mean-based rule?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Scenario",
+    "A KPI definition changes halfway through a quarter. How do you report it?",
+    "Document the old and new definitions, quantify the impact if possible, annotate the change in trend reports and avoid comparing incompatible values without a bridge or restatement.",
+    "Keep definitions versioned and obtain stakeholder agreement.",
+    "How would you explain the break in trend to leadership?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "Why might a trend reverse after data is broken into meaningful segments?",
+    "An overall trend can reverse or differ from trends within subgroups because group sizes or composition differ.",
+    "Segment by relevant factors before drawing conclusions from aggregates.",
+    "How could channel mix change an overall conversion rate?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Practical",
+    "How would you design a funnel conversion analysis?",
+    "Define ordered stages, the eligible population and a consistent time window; count distinct entities at each stage and calculate conversion between consecutive stages.",
+    "Avoid counting the same user multiple times in one stage unless intended.",
+    "How do you distinguish stage conversion from end-to-end conversion?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Concept",
+    "How do confidence intervals communicate uncertainty around an estimate?",
+    "A confidence interval is a range produced by a method that, under repeated sampling and its assumptions, captures the true parameter at the stated rate over repeated samples.",
+    "Do not interpret a 95% confidence interval as a 95% probability that this one fixed parameter is inside the computed interval in the standard frequentist framing.",
+    "How does larger sample size typically affect interval width?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "What is a median and when is it useful?",
+    "The median is the middle value after sorting; it is less affected by extreme values than the mean and can describe skewed distributions such as income.",
+    "Choose mean or median according to the distribution and business question.",
+    "How could you explain a mean that is much higher than the median?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Scenario",
+    "A conversion rate drops after a website release. How do you diagnose it?",
+    "Validate event instrumentation and denominator definitions first, then compare pre/post periods by device, channel and funnel stage; check traffic mix, seasonality and concurrent changes.",
+    "Correlation with release timing is a signal, not proof of causality.",
+    "What would make an A/B test appropriate?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "What is sampling bias?",
+    "Sampling bias occurs when how observations enter a sample makes it systematically unrepresentative of the population relevant to the question.",
+    "Check who is missing from the sample and whether missingness relates to the outcome.",
+    "How might only surveying active customers bias satisfaction results?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Practical",
+    "How would you prioritize data-quality checks?",
+    "Prioritize checks by business risk: completeness, validity, uniqueness, consistency, timeliness and referential integrity for fields driving decisions or financial reporting.",
+    "Tie every check to a severity threshold and owner.",
+    "Which issue should block publication of a financial dashboard?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "What is a weighted average?",
+    "A weighted average multiplies each value by its weight, sums those products and divides by total weight; it is useful when groups have different sizes or exposure.",
+    "Ensure weights represent the intended denominator and sum correctly.",
+    "Why is average branch conversion not always the mean of branch rates?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Scenario",
+    "A stakeholder says a dashboard is wrong but provides no details. How do you respond?",
+    "Ask which metric, filter, time period and expected source they are comparing; reproduce the scenario, verify definitions and trace from displayed value to source rows.",
+    "Keep a clear issue log and distinguish display problems from source-data problems.",
+    "What minimum information belongs in a dashboard bug report?"
+  ],
+  [
+    "Data Analysis",
+    "Intermediate",
+    "Concept",
+    "What is seasonality in a time series?",
+    "Seasonality is a recurring pattern tied to calendar or seasonal intervals, such as weekly traffic cycles or festive sales periods.",
+    "Compare equivalent periods and consider holidays and changing business days.",
+    "How could seasonality mislead a month-over-month comparison?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Practical",
+    "How would you explain a data finding to a non-technical manager?",
+    "Start with the decision-relevant takeaway, quantify the size and period, show the key evidence, describe uncertainty and propose a next action or validation step.",
+    "Avoid unexplained statistical jargon and make the metric definition clear.",
+    "How would you summarize a finding in two sentences?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Concept",
+    "What is an A/B test guardrail metric?",
+    "A guardrail metric monitors unintended harm or trade-offs while evaluating a primary outcome, such as latency, refunds or complaint rate during a conversion test.",
+    "Define thresholds and decision rules before reading results.",
+    "Why not choose a winner from conversion alone?"
+  ],
+  [
+    "Data Analysis",
+    "Interview",
+    "Practical",
+    "How do you estimate the impact of a proposed process improvement?",
+    "Establish a baseline, define affected volume and unit impact, model assumptions and scenarios, then validate with a pilot and track realized benefits against the baseline.",
+    "Separate measured benefits from estimates and state assumptions.",
+    "How would you prevent double-counting saved time and monetary savings?"
+  ],
+  [
+    "Data Engineering",
+    "Beginner",
+    "Concept",
+    "What is ETL compared with ELT?",
+    "ETL transforms data before loading it into a target; ELT loads raw data first and transforms inside the target platform. The best choice depends on architecture and governance needs.",
+    "Mention data volume, latency, cost and transformation tooling.",
+    "Which pattern might suit a cloud warehouse with scalable compute?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is idempotency in a data pipeline?",
+    "An idempotent pipeline can be rerun for the same input without creating unintended duplicate or inconsistent results, often through deterministic keys, merges or partition replacement.",
+    "Plan for retries and partial failures from the start.",
+    "How can a daily load safely rerun for yesterday?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is incremental loading?",
+    "Incremental loading processes only new or changed data since a checkpoint, rather than reloading the entire dataset each run.",
+    "Define a reliable watermark and handle late-arriving updates.",
+    "Why can MAX(updated_at) alone miss records?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Scenario",
+    "A scheduled pipeline succeeded but the dashboard has yesterday's data. What do you check?",
+    "Verify source arrival, pipeline run time, transformation dependencies, target partition/merge, semantic-model refresh, timezone assumptions and end-to-end freshness timestamps.",
+    "Trace timestamps through each layer rather than rerunning everything blindly.",
+    "What monitoring metric would help detect this next time?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is a data contract?",
+    "A data contract documents expectations between producers and consumers, such as schema, meanings, keys, freshness, quality thresholds and change policy.",
+    "Contracts need ownership and a process for breaking changes.",
+    "How should a pipeline react to an unexpected column type?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Concept",
+    "What are late-arriving facts?",
+    "They are business events that arrive after their event time or after related dimension information is available, requiring a policy for updates, backfills or unknown members.",
+    "Distinguish event time from ingestion time.",
+    "How might a late order affect last month's revenue?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is a watermark in a pipeline?",
+    "A watermark records a progress boundary such as the latest processed timestamp or offset to determine what data to process next.",
+    "Allow for late updates and replay where the source's arrival order is not reliable.",
+    "How could you combine a watermark with overlap and deduplication?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Scenario",
+    "A file arrives twice and would duplicate transactions. How can the pipeline prevent it?",
+    "Track file identity and run status, use stable business keys, merge or deduplicate records, and make reprocessing explicit and idempotent.",
+    "A filename alone may not uniquely identify a business batch.",
+    "What audit metadata would you store per load?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is partitioning and why use it?",
+    "Partitioning organizes data by a key such as date or region so queries can prune irrelevant partitions and maintenance can target smaller subsets.",
+    "Too many small partitions or a skewed key can reduce performance.",
+    "Which date column should be used for partitioning: event or ingestion date?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Practical",
+    "How would you implement basic pipeline monitoring?",
+    "Capture run status, duration, input/output row counts, freshness, rejected records and error details; alert on missed schedules or quality thresholds.",
+    "Monitor business outcomes, not only whether a job returned success.",
+    "How would you avoid alert fatigue?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "What is a dead-letter or quarantine area?",
+    "It stores records that failed validation or processing for investigation and controlled replay, rather than silently discarding them.",
+    "Include error reason, source batch and timestamp while protecting sensitive data.",
+    "How should quarantined rows be reconciled back to source totals?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Concept",
+    "How should a pipeline handle a source column being added, renamed or retyped?",
+    "Schema evolution is a change to fields, types or structure over time; a pipeline needs policies for compatible additions and breaking changes.",
+    "Test downstream consumers when a producer changes its schema.",
+    "Why can renaming a column be more breaking than adding one?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Scenario",
+    "A pipeline creates duplicate rows only after retries. What do you inspect?",
+    "Inspect transaction boundaries, checkpoints, write mode, merge keys and whether a retry resumes or repeats already completed work.",
+    "Test failure and retry behavior, not only happy-path runs.",
+    "How can a temporary table and atomic swap help?"
+  ],
+  [
+    "Data Engineering",
+    "Intermediate",
+    "Concept",
+    "How would you choose between scheduled batch jobs and continuous event processing?",
+    "Batch processes bounded collections on a schedule; streaming processes continuing events with lower-latency requirements and additional ordering, replay and state considerations.",
+    "Choose latency based on the business need, not trend alone.",
+    "Can a system combine streaming ingestion with batch reconciliation?"
+  ],
+  [
+    "Data Engineering",
+    "Interview",
+    "Practical",
+    "How would you document a data pipeline for a support handover?",
+    "Document source and destination, schedule, owners, dependencies, transformations, data-quality checks, backfill/retry procedure, alerts, access needs and recovery steps.",
+    "A runbook should let another person diagnose common failures without relying on the author.",
+    "Which steps should be included in a backfill procedure?"
+  ],
+  [
+    "Infor Birst",
+    "Beginner",
+    "Concept",
+    "What should you clarify before building a report in Infor Birst?",
+    "Confirm the business question, metric definitions, user audience, filters, reporting grain, source freshness and expected reconciliation totals before choosing report layout.",
+    "Keep platform-specific implementation details aligned with the deployed Birst version.",
+    "What would you ask when two teams define revenue differently?"
+  ],
+  [
+    "Infor Birst",
+    "Intermediate",
+    "Concept",
+    "Why is semantic-layer consistency useful in BI reporting?",
+    "A semantic layer can centralize business names, relationships and metric logic so different reports use consistent definitions.",
+    "Validate calculations against governed definitions and known totals.",
+    "How would you investigate a metric that differs between two reports?"
+  ],
+  [
+    "Infor Birst",
+    "Intermediate",
+    "Scenario",
+    "An Infor Birst report total differs from the source system. How do you troubleshoot?",
+    "Compare date range, filters, source refresh, grain, joins, aggregation rules and null handling; reconcile row counts and totals through each transformation layer.",
+    "Capture the exact report, filters and timestamp so the issue is reproducible.",
+    "Which control totals would you compare first?"
+  ],
+  [
+    "Infor Birst",
+    "Intermediate",
+    "Concept",
+    "What is the importance of defining grain in a Birst data model?",
+    "Grain describes what a row represents. Correct grain prevents double counting when measures and dimensions are joined or aggregated.",
+    "Document grain for facts and check key uniqueness at that grain.",
+    "What happens when an order-level measure is repeated at order-line grain?"
+  ],
+  [
+    "Infor Birst",
+    "Interview",
+    "Scenario",
+    "A scheduled Birst report is stale. What checks should you perform?",
+    "Check upstream availability, load or refresh completion, schedule settings, report filters and whether the consumer is opening the intended current report.",
+    "Use logs and timestamps instead of assuming report rendering is the cause.",
+    "How would you communicate a delayed refresh to users?"
+  ],
+  [
+    "Infor Birst",
+    "Intermediate",
+    "Concept",
+    "Why should shared metric definitions be governed?",
+    "Governance provides a single agreed meaning, formula, owner, grain and refresh expectation for metrics reused across dashboards and teams.",
+    "Record definition changes and assess downstream report impact.",
+    "Who should approve a change to a finance KPI?"
+  ],
+  [
+    "Infor Birst",
+    "Interview",
+    "Practical",
+    "How would you validate a new Birst dashboard before publishing?",
+    "Test filters and drill paths, reconcile headline measures, inspect missing categories and dates, verify user access and confirm performance on expected data volume.",
+    "Include business users in definition and acceptance checks.",
+    "What belongs in dashboard acceptance criteria?"
+  ],
+  [
+    "Infor Birst",
+    "Interview",
+    "Concept",
+    "How do fact and dimension concepts help organize BI data?",
+    "Facts represent measurable business events at a defined grain; dimensions describe entities and attributes used to slice those facts.",
+    "Avoid mixing multiple fact grains without a clear model design.",
+    "Give an order fact and two possible dimensions."
+  ],
+  [
+    "Infor Birst",
+    "Intermediate",
+    "Scenario",
+    "A report filter produces unexpected totals. What do you examine?",
+    "Confirm the filter field, relationship path, default selections, null members, aggregation behavior and whether the filter applies to the expected data population.",
+    "Reproduce the issue with one small known example.",
+    "How could you test a filter against a manually calculated sample?"
+  ],
+  [
+    "Infor Birst",
+    "Interview",
+    "Concept",
+    "How should you discuss Birst experience when you cannot recall a version-specific feature?",
+    "Explain the workflow and concepts you have actually used, state the version or limitation, and verify exact feature behavior in official documentation rather than guessing.",
+    "Clear boundaries are more credible than unsupported product claims.",
+    "How would you approach learning an unfamiliar Birst feature?"
+  ],
+  [
+    "HR & Telephonic",
+    "Beginner",
+    "Behavioral",
+    "How would you introduce yourself in a 45-second recruiter call?",
+    "Give your degree, current role, relevant tools, one genuine responsibility or project, and the role you are targeting in simple sentences.",
+    "Aim for a clear, factual story rather than reciting every resume line.",
+    "Can you explain one recent reporting task in more detail?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "Why are you looking for a new role?",
+    "Connect the move to learning, responsibility and role alignment; remain respectful about the current employer and be honest about your reason.",
+    "Do not criticize colleagues or invent a career motivation you do not have.",
+    "What are you hoping to learn in the next role?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "Tell me about a mistake you made and what you learned.",
+    "Choose a real, manageable example, explain the impact, your ownership, the correction and the prevention step. Do not claim a fictional incident.",
+    "Keep the focus on learning and process improvement.",
+    "What check did you add to prevent a repeat?"
+  ],
+  [
+    "HR & Telephonic",
+    "Beginner",
+    "Communication",
+    "What can you say if you do not understand an interview question?",
+    "You can say: Could you please repeat or rephrase the question? I want to make sure I understand it correctly.",
+    "Clarifying a question is better than answering something unrelated.",
+    "How would you confirm the question in your own words?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "How do you handle competing deadlines?",
+    "Clarify priority and impact, estimate effort, communicate trade-offs early and agree on a realistic sequence with the stakeholder.",
+    "Give an example only if it matches your experience.",
+    "What would you do if both tasks were marked urgent?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "How would you respond when you do not know an answer?",
+    "Be transparent, explain what you do know, outline how you would investigate and avoid pretending certainty.",
+    "Think aloud in a structured way when the interviewer invites it.",
+    "How would you verify the answer after the interview?"
+  ],
+  [
+    "HR & Telephonic",
+    "Beginner",
+    "Communication",
+    "How do you end a telephonic interview professionally?",
+    "Thank the interviewer, ask about the next step or timeline if appropriate, and confirm any information you need to share afterward.",
+    "Keep the closing short and polite.",
+    "What question can you ask about next steps?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "Describe a time you received feedback.",
+    "Use a real example: summarize the feedback, explain what you changed and describe the observed result without exaggerating.",
+    "Show that you can accept useful feedback and act on it.",
+    "How do you check whether your improvement worked?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Behavioral",
+    "How do you explain a shortcoming in a tool you list on your resume?",
+    "Be specific about what you can do, what you have not used deeply, and how you are currently learning; do not claim expert proficiency.",
+    "Accurate skill levels build trust.",
+    "Which small exercise demonstrates your current skill?"
+  ],
+  [
+    "HR & Telephonic",
+    "Interview",
+    "Communication",
+    "What would you ask the recruiter before ending the call?",
+    "Ask about the role's main responsibilities, interview stages, expected skill emphasis and next steps, choosing questions not already answered.",
+    "Avoid leading only with salary before understanding the role unless it is necessary to clarify fit.",
+    "How can you ask about the day-to-day work?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Behavioral",
+    "How do you explain a project using Problem, Action and Result?",
+    "State the business problem, your actual contribution and tools, then the measurable or observed result. If the result was not measured, say what deliverable was produced instead.",
+    "Do not invent impact numbers; distinguish team output from your contribution.",
+    "What evidence supports the result you described?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Scenario",
+    "How would you explain a project whose data cannot be shared publicly?",
+    "Describe the business context, anonymized structure, your workflow and validation methods without revealing confidential names, figures or sensitive fields.",
+    "Use approved sample or synthetic data in a portfolio.",
+    "How could you demonstrate the same skill with a public dataset?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Behavioral",
+    "How do you describe your contribution when you worked as part of a team?",
+    "Separate your own tasks from the team's overall work and explain how you collaborated, coordinated handoffs and validated the shared result.",
+    "Use 'I' for your contribution and 'we' for team outcomes.",
+    "Which part did you personally own?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Practical",
+    "How would you demonstrate a dashboard project on GitHub?",
+    "Include a clear README, problem statement, dataset source, data dictionary, transformations, metric definitions, screenshots, validation checks and known limitations.",
+    "Remove credentials and sensitive source data before publishing.",
+    "What test proves the headline KPI is correct?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Scenario",
+    "An interviewer challenges a resume metric. How do you respond?",
+    "Explain the metric's definition, baseline, time window and source; if you cannot verify it, acknowledge that and correct the statement rather than defending an unsupported number.",
+    "Every resume metric should be reproducible or removed.",
+    "How would you rewrite the bullet if the impact was not quantified?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Behavioral",
+    "How do you explain a project that is still in progress?",
+    "Explain the goal, current stage, completed work, remaining work and how success will be evaluated; do not present planned outcomes as achieved outcomes.",
+    "Use a clear status and next milestone.",
+    "What is the biggest remaining risk?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Practical",
+    "What should you prepare for a Birst project discussion?",
+    "Be ready to explain its reporting goal, source-to-report workflow, dimensions and metrics, validation, refresh expectations, users and what you personally implemented.",
+    "Only discuss features you have really used and can explain.",
+    "How did you validate the report numbers?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Scenario",
+    "A portfolio project shows a result that cannot be reproduced. What do you improve?",
+    "Add data provenance, exact transformation steps, versioned code or files, metric definitions, environment assumptions and tests so another person can repeat the result.",
+    "Reproducibility is a stronger signal than a polished screenshot alone.",
+    "Which inputs and expected outputs should the README include?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Behavioral",
+    "How would you explain a gap in project experience honestly?",
+    "State the current level, related transferable practice and a concrete learning project; avoid inventing client work or production experience.",
+    "Show an actual artifact or code example when possible.",
+    "What recent practice task best demonstrates your readiness?"
+  ],
+  [
+    "Resume & Projects",
+    "Interview",
+    "Practical",
+    "How should you prioritize projects on a junior analyst resume?",
+    "Prioritize projects that match the target role, demonstrate end-to-end analysis, show validation and clear communication, and can be explained deeply in an interview.",
+    "Two well-understood projects are better than many shallow or unverifiable ones.",
+    "Which project best proves your SQL ability?"
+  ],
+  [
+    "English & Confidence",
+    "Beginner",
+    "Communication",
+    "How can you ask for a few seconds to think?",
+    "Say: Let me think through this for a moment. I would start by checking the requirement and then work through the data.",
+    "A short pause is natural; explain your reasoning in small steps.",
+    "What first check would you do for a data mismatch?"
+  ],
+  [
+    "English & Confidence",
+    "Beginner",
+    "Communication",
+    "How do you explain a difficult concept in simple English?",
+    "Use a short definition, one everyday analogy or example, and one sentence about when it is useful.",
+    "Avoid jargon that you cannot define clearly.",
+    "Can you explain a SQL join in two sentences?"
+  ],
+  [
+    "English & Confidence",
+    "Beginner",
+    "Communication",
+    "How do you politely disagree with an interviewer or stakeholder?",
+    "Say: I see your point. I would like to check one detail because it may change the result. Then explain the evidence calmly.",
+    "Focus on evidence, not on proving the other person wrong.",
+    "What data would you check before concluding?"
+  ],
+  [
+    "English & Confidence",
+    "Intermediate",
+    "Communication",
+    "How can you structure a spoken technical answer in 30 seconds?",
+    "Use Definition, Example, and Why it matters. If needed, add one limitation or follow-up check.",
+    "Practice aloud with a timer but do not rush your words.",
+    "Use this format to explain GROUP BY."
+  ],
+  [
+    "English & Confidence",
+    "Beginner",
+    "Communication",
+    "What can you say when you need to correct your own answer?",
+    "Say: I want to correct one part of my answer. The more accurate explanation is... Then state the correction clearly.",
+    "Self-correction is better than continuing with a mistake.",
+    "How would you correct a mistaken explanation of LEFT JOIN?"
+  ],
+  [
+    "Business Analyst & Requirements",
+    "Beginner",
+    "Concept",
+    "What information turns a user request into a testable user story?",
+    "A user story briefly describes a need from a user's perspective, often in the form: As a [user], I want [capability], so that [benefit].",
+    "A story should connect to value and have testable acceptance criteria.",
+    "How would you write a story for a monthly sales report?"
+  ],
+  [
+    "Business Analyst & Requirements",
+    "Intermediate",
+    "Practical",
+    "How do you write acceptance criteria for a new report?",
+    "Define expected metrics, population, filters, date logic, freshness, permissions and reconciliation rules in testable language.",
+    "Avoid vague criteria such as 'the report should look correct'.",
+    "What is one measurable acceptance test?"
+  ],
+  [
+    "Business Analyst & Requirements",
+    "Interview",
+    "Scenario",
+    "How should an analyst document a decision after stakeholders disagree about a KPI?",
+    "Document both definitions and intended decisions, show the impact of each, facilitate agreement with the metric owner and record the approved rule.",
+    "Do not silently choose one definition for convenience.",
+    "How would you handle a deadline before agreement is reached?"
+  ],
+  [
+    "Business Analyst & Requirements",
+    "Intermediate",
+    "Concept",
+    "What is the difference between a business requirement and a solution design?",
+    "A business requirement describes the need or outcome; solution design describes how a system or process will meet it.",
+    "Keep the problem statement separate from the proposed tool.",
+    "How would you gather requirements before deciding on Power BI?"
+  ],
+  [
+    "Business Analyst & Requirements",
+    "Interview",
+    "Practical",
+    "How do you confirm a requirement is complete?",
+    "Review purpose, users, inputs, business rules, outputs, edge cases, non-functional needs, acceptance criteria and stakeholder approval.",
+    "Use examples and edge cases to reveal hidden assumptions.",
+    "Which edge case would you test for a date filter?"
+  ],
+  [
+    "MIS & Reporting",
+    "Beginner",
+    "Concept",
+    "What should a daily MIS report include?",
+    "It should include agreed KPIs, reporting period and refresh time, comparison or target where useful, exception highlights and clear definitions.",
+    "Keep it action-oriented; avoid unnecessary detail that hides exceptions.",
+    "What would you show when a KPI is delayed?"
+  ],
+  [
+    "MIS & Reporting",
+    "Intermediate",
+    "Practical",
+    "How would you reconcile reports from multiple branches?",
+    "Standardize field definitions, time periods and units, combine branch data, check branch-level totals and missing submissions, then compare the grand total to an independent control.",
+    "Track missing, duplicate and late branch submissions separately.",
+    "How would you show a branch that did not submit data?"
+  ],
+  [
+    "MIS & Reporting",
+    "Interview",
+    "Scenario",
+    "A daily report is delayed because one source file is missing. What do you do?",
+    "Confirm the missing dependency, alert users about the impact, publish only if an approved partial-data rule exists, and record the missing source for follow-up.",
+    "Never label an incomplete report as complete.",
+    "What status label and timestamp would you display?"
+  ],
+  [
+    "MIS & Reporting",
+    "Intermediate",
+    "Concept",
+    "What is a control total in reporting?",
+    "A control total is an independent aggregate such as record count or total amount used to verify that data was transferred or transformed completely.",
+    "A matching total alone cannot prove every row is correct; use multiple checks.",
+    "Which control totals would help validate a bank transaction file?"
+  ],
+  [
+    "MIS & Reporting",
+    "Interview",
+    "Practical",
+    "How do you make a recurring report less error-prone?",
+    "Automate repeatable steps, validate schema and row counts, compare totals, flag exceptions, timestamp refreshes and use a checklist before distribution.",
+    "Retain an auditable copy of the source and final output according to policy.",
+    "What should happen when a validation check fails?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Beginner",
+    "Concept",
+    "What is a fact table?",
+    "A fact table records business events or measurements at a defined grain, such as one row per order line or transaction.",
+    "State the grain before choosing measures or foreign keys.",
+    "What measures might belong in an order-line fact?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Beginner",
+    "Concept",
+    "What is a dimension table?",
+    "A dimension describes entities such as customer, product, date or region and provides attributes used to filter and group facts.",
+    "Keep descriptive attributes at the dimension's intended grain.",
+    "Which dimension would contain product category?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "How can a warehouse identify a dimension row independently of a source-system code?",
+    "A surrogate key is a generated identifier used to identify a dimension row independently of its source business key.",
+    "It can help manage changed source identifiers and historical dimension versions.",
+    "Why might a slowly changing dimension need multiple surrogate keys for one customer?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "What is a slowly changing dimension Type 2?",
+    "Type 2 preserves history by adding a new dimension row when tracked attributes change, usually with validity dates or current-row flags.",
+    "Ensure facts map to the correct historical dimension version.",
+    "How would you find the current row?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Scenario",
+    "A fact table has multiple rows per order but a report sums order total. What is the risk?",
+    "If order-level total is repeated on each line, summing it at line grain double counts orders. Use the correct grain, a measure that deduplicates by order, or model order and line facts separately.",
+    "Never aggregate a measure without confirming its grain.",
+    "Which measure is additive across order lines and which may not be?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "What is the difference between a star and a snowflake schema?",
+    "A star connects a central fact directly to denormalized dimensions; a snowflake further normalizes dimension attributes into related tables.",
+    "Trade off simpler queries against storage, governance and attribute design needs.",
+    "Why may a star schema be easier for BI users?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Concept",
+    "What does additive, semi-additive and non-additive mean for measures?",
+    "Additive measures can sum across all dimensions; semi-additive measures can sum across some but not time; non-additive measures such as ratios should usually be recalculated from their components.",
+    "Balances are often semi-additive; percentages often non-additive.",
+    "Why should regional conversion rates not simply be summed?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Scenario",
+    "A dimension key is duplicated on the supposed one side of a relationship. What happens?",
+    "The relationship may not support the intended one-to-many model and can multiply facts or cause ambiguity. Resolve duplicates or define the proper grain before modelling.",
+    "Validate dimension-key uniqueness as a pipeline quality rule.",
+    "How would you find repeated dimension keys?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "What is a bridge table?",
+    "A bridge table represents a many-to-many relationship by storing the associations between entities, with careful measure handling to avoid double counting.",
+    "Define allocation rules if a fact must be split among several members.",
+    "Give an example involving accounts and customers."
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Concept",
+    "What is a conformed dimension?",
+    "A conformed dimension has a consistent definition and keys across multiple facts or data marts, enabling comparable reporting across processes.",
+    "Align attribute meanings and history rules, not just column names.",
+    "Why is a shared date dimension helpful across sales and support facts?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "What is a data mart compared with a data warehouse?",
+    "A data mart serves a focused subject area or user group; a data warehouse integrates data for broader analytical use, though architecture varies by organization.",
+    "Describe the organization's actual architecture rather than assuming every mart is separate.",
+    "When might a certified sales mart be useful?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Practical",
+    "How would you model order header and order line data?",
+    "Use a header-level fact for order-level measures and a line-level fact for product quantities and line amounts, with shared dimensions as needed.",
+    "Do not repeat header-level amounts on every line unless measures are handled accordingly.",
+    "Which table should contain unit price and quantity?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Scenario",
+    "One source dimension changes its code format. How do you keep history and reporting stable?",
+    "Map source business keys to controlled warehouse keys, profile the change, update ingestion and mapping rules, and preserve historical relationships according to the business history policy.",
+    "Avoid treating a key-format change as a new entity without checking.",
+    "What data-quality checks can detect an unexpected key shift?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Intermediate",
+    "Concept",
+    "What is data lineage?",
+    "Data lineage records where data originated and how it was transformed into downstream tables, metrics or reports.",
+    "Lineage helps audit changes and trace mismatches from report back to source.",
+    "What lineage details would you record for a KPI?"
+  ],
+  [
+    "Data Modeling & Warehousing",
+    "Interview",
+    "Practical",
+    "How would you validate a dimensional model before BI release?",
+    "Test grain, dimension-key uniqueness, fact foreign-key coverage, measure additivity, date coverage, slowly changing dimension rules and reconciled totals.",
+    "Include edge cases such as unknown members and late-arriving facts.",
+    "Which fact-to-dimension check should fail the build?"
+  ]
+];
+  rows.push(...v31Rows);
+
   const sources = {
     "SQL": {label:"PostgreSQL official SQL tutorial", url:"https://www.postgresql.org/docs/current/tutorial.html"},
     "Excel": {label:"Microsoft Excel XLOOKUP documentation", url:"https://support.microsoft.com/en-us/excel/functions/xlookup-function"},
@@ -1953,7 +3757,7 @@
     seenQuestions.add(key);
     return true;
   });
-  window.INTERVIEW_QUESTION_BANK_VERSION = "3.0.0";
+  window.INTERVIEW_QUESTION_BANK_VERSION = "3.1.0";
   window.INTERVIEW_QUESTIONS = validRows.map((r, i) => ({
     id: "iq-" + String(i + 1).padStart(3, "0"), category: r[0], difficulty: r[1], type: r[2],
     question: r[3], answer: r[4], tip: r[5] || "", followUp: r[6] || "", source: sources[r[0]] || null,

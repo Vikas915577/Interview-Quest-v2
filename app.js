@@ -14,14 +14,17 @@ const modules = [
   {id:'ba-mis',icon:'🗂️',title:'Business Analyst & MIS Reporting',category:'Requirements & reporting',time:'12 min',short:'Requirements, acceptance criteria, reconciliations aur daily MIS.',description:'Stakeholder requests ko clear requirements aur accurate recurring reports mein convert karna seekho.',firstQuestion:'A manager asks for a report but has not explained what decision it should support. What do you ask?',questions:['How do you gather requirements for a new dashboard?','How do you reconcile reports from different branches?','What are acceptance criteria?'],coach:'Audience, decision, KPI definition, date range, freshness aur validation criteria clear karo.',prompt:'TUM MERE BUSINESS ANALYST AUR MIS/REPORTING INTERVIEW COACH HO. Requirement elicitation, user stories, acceptance criteria, As-Is/To-Be, stakeholder conflicts, reporting cadence, control totals, daily MIS, branch consolidation, Excel/Power Query automation aur reconciliation par ek-ek scenario question poochho. Pehle mera answer lo; phir 10 mein score, Hindi feedback, easy professional English answer aur follow-up do. Unsupported work experience ya results invent mat karna.'}
 ];
 
-const sevenDayPlan = [
-  {day:'DAY 1',title:'Phone confidence + introduction',desc:'Telephonic greeting, self-introduction aur current role. 10–15 minutes.',module:'telephonic'},
-  {day:'DAY 2',title:'HR answers',desc:'Strengths, weakness, job change aur why hire you.',module:'hr'},
-  {day:'DAY 3',title:'SQL fundamentals',desc:'SELECT, WHERE, ORDER BY, DISTINCT aur ek query khud likho.',module:'sql'},
-  {day:'DAY 4',title:'Excel & BI tools',desc:'PivotTable, XLOOKUP, dashboard aur KPI explain karo.',module:'bi-tools'},
-  {day:'DAY 5',title:'Python + data quality',desc:'Python basics, Pandas missing values aur duplicates.',module:'python'},
-  {day:'DAY 6',title:'Resume/project story',desc:'Current role aur ek genuine project ko structured way mein explain karo.',module:'resume'},
-  {day:'DAY 7',title:'Full mock interview',desc:'Realistic mock do aur feedback ke weak areas revise karo.',module:'mock'}
+const tenDayPlan = [
+  {day:'DAY 1',title:'SQL foundations: SELECT, WHERE, DISTINCT',desc:'Use the sample tables. Write and run through 4 beginner queries; explain each clause aloud.',module:'sql'},
+  {day:'DAY 2',title:'SQL aggregation and business counts',desc:'Practice COUNT, SUM, AVG, GROUP BY and HAVING. Check your result against expected totals.',module:'sql'},
+  {day:'DAY 3',title:'SQL JOINs using all four tables',desc:'Join employees to departments and customers to orders. Learn INNER JOIN vs LEFT JOIN.',module:'sql'},
+  {day:'DAY 4',title:'SQL interview problems',desc:'Subqueries, CASE, NOT EXISTS, CTEs, window functions and data-quality checks.',module:'sql'},
+  {day:'DAY 5',title:'Excel + Power BI reporting',desc:'PivotTables, XLOOKUP, DAX measures, relationships and KPI validation.',module:'bi-tools'},
+  {day:'DAY 6',title:'Python + Pandas data cleaning',desc:'Missing values, duplicates, filters, groupby, merge and safe CSV handling.',module:'python'},
+  {day:'DAY 7',title:'Analysis and data-quality cases',desc:'Investigate KPI changes, reconcile totals, investigate outliers and explain findings.',module:'technical'},
+  {day:'DAY 8',title:'Infor Birst + data modelling',desc:'Explain grain, facts/dimensions, governed metrics, refresh checks and report validation.',module:'bi-tools'},
+  {day:'DAY 9',title:'Resume, HR and simple English',desc:'Explain your real role and projects without inventing achievements; practice short answers.',module:'resume'},
+  {day:'DAY 10',title:'Full mock interview + revision',desc:'Complete a mock, revise saved questions and focus on your two weakest topics.',module:'mock'}
 ];
 
 const STORAGE_KEY = 'interviewQuest.v1';
@@ -35,9 +38,10 @@ function loadState(){
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     return {
       sessions: Array.isArray(saved.sessions) ? saved.sessions : [],
-      bookmarks: Array.isArray(saved.bookmarks) ? saved.bookmarks : []
+      bookmarks: Array.isArray(saved.bookmarks) ? saved.bookmarks : [],
+      sqlAttempts: saved.sqlAttempts && typeof saved.sqlAttempts === 'object' && !Array.isArray(saved.sqlAttempts) ? saved.sqlAttempts : {}
     };
-  } catch { return {sessions:[],bookmarks:[]}; }
+  } catch { return {sessions:[],bookmarks:[],sqlAttempts:{}}; }
 }
 function saveState(){
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -82,16 +86,48 @@ function renderAllModules(filter=''){
   document.getElementById('all-modules').innerHTML=filtered.map(moduleCard).join('');
   document.getElementById('no-results').classList.toggle('hidden',filtered.length>0);
 }
+
+function renderSqlTable(table){
+  const head=table.columns.map(c=>`<th scope="col">${escapeHtml(c)}</th>`).join('');
+  const rows=table.rows.map(row=>`<tr>${row.map(value=>`<td>${value===null?'<span class="null-value">NULL</span>':escapeHtml(value)}</td>`).join('')}</tr>`).join('');
+  return `<div class="sql-table-card"><div class="sql-table-head"><strong>${escapeHtml(table.name)}</strong><span>${escapeHtml(table.description)}</span></div><div class="sql-table-scroll"><table class="sql-data-table"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+function renderSqlLab(){
+  const lab=window.INTERVIEW_SQL_LAB;
+  if(!lab||!Array.isArray(lab.tables)||!Array.isArray(lab.exercises))return '<div class="coach-note load-warning">SQL practice tables could not be loaded. Check that <code>sql-lab.js</code> is in the same folder.</div>';
+  const groups=[...new Set(lab.exercises.map(e=>e.level))];
+  const exerciseMarkup=lab.exercises.map((e,i)=>`<article class="sql-exercise" id="${e.id}">
+    <div class="sql-exercise-top"><span class="sql-index">${String(i+1).padStart(2,'0')}</span><span class="level-tag">${escapeHtml(e.level)}</span><span class="type-tag">${escapeHtml(e.topic)}</span></div>
+    <h3>${escapeHtml(e.title)}</h3><p class="sql-task">${escapeHtml(e.task)}</p>
+    <label class="sql-attempt-label" for="sql-attempt-${e.id}">Your query attempt</label><textarea class="sql-attempt-input" id="sql-attempt-${e.id}" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Write your SQL query here...">${escapeHtml(state.sqlAttempts?.[e.id]||'')}</textarea>
+    <div class="sql-actions"><button class="btn btn-mint" type="button" data-sql-action="save-attempt" data-sql-id="${e.id}">Save attempt</button><button class="btn btn-secondary" type="button" data-sql-action="hint" data-sql-id="${e.id}" aria-controls="hint-${e.id}" aria-expanded="false">Show hint</button><button class="btn btn-primary" type="button" data-sql-action="solution" data-sql-id="${e.id}" aria-controls="solution-${e.id}" aria-expanded="false">Show solution</button><button class="btn btn-secondary" type="button" data-sql-action="copy" data-sql-id="${e.id}">Copy SQL</button></div>
+    <div class="sql-hint" id="hint-${e.id}" hidden><strong>Hint</strong><p>${escapeHtml(e.hint)}</p></div>
+    <div class="sql-solution" id="solution-${e.id}" hidden><strong>Example solution</strong><pre><code>${escapeHtml(e.solution)}</code></pre><p>${escapeHtml(e.explanation)}</p><p class="sql-expected"><b>Expected check:</b> ${escapeHtml(e.expected)}</p></div>
+  </article>`).join('');
+  return `<section class="sql-lab subsection" aria-labelledby="sql-lab-title">
+    <div class="sql-lab-intro"><p class="kicker">PRACTISE WITH SAMPLE DATA</p><h2 id="sql-lab-title">SQL Lab: tables + 20 questions</h2><p>Question padho, pehle khud query likho, phir hint ya solution kholo. Sample data practice ke liye illustrative hai; query browser mein execute nahi hoti.</p><div class="chip-row"><span class="chip">${lab.tables.length} sample tables</span><span class="chip">${lab.exercises.length} SQL exercises</span><span class="chip">Beginner → Interview</span></div></div>
+    <div class="sql-filter-row"><label for="sql-level-filter">Difficulty</label><select id="sql-level-filter"><option value="all">All levels (${lab.exercises.length})</option>${groups.map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)} (${lab.exercises.filter(e=>e.level===g).length})</option>`).join('')}</select></div>
+    <div class="sql-tables"><h3>Sample tables</h3><p>Use these exact table and column names in the exercises.</p>${lab.tables.map(renderSqlTable).join('')}</div>
+    <div class="sql-exercises"><div class="sql-exercise-heading"><h3>SQL practice questions</h3><span id="sql-visible-count">${lab.exercises.length} questions</span></div>${exerciseMarkup}<p id="sql-empty" class="empty-state hidden">No questions at this level.</p></div>
+  </section>`;
+}
+function initSqlLab(){
+  const filter=document.getElementById('sql-level-filter');
+  if(filter){filter.addEventListener('change',()=>{let visible=0;document.querySelectorAll('.sql-exercise').forEach(card=>{const level=card.querySelector('.level-tag')?.textContent||'';const show=filter.value==='all'||level===filter.value;card.classList.toggle('hidden',!show);if(show)visible++;});const count=document.getElementById('sql-visible-count');if(count)count.textContent=`${visible} questions`;const empty=document.getElementById('sql-empty');if(empty)empty.classList.toggle('hidden',visible>0);});}
+}
+
 function renderModule(id){
   selectedModule=getModule(id); const m=selectedModule;
   const questions=m.questions.map((q,i)=>`<div class="question-item"><span class="question-number">${i+1}</span><p>${escapeHtml(q)}</p></div>`).join('');
   document.getElementById('module-detail').innerHTML=`
     <div class="detail-head"><div class="module-icon" aria-hidden="true">${m.icon}</div><div class="kicker">${escapeHtml(m.category.toUpperCase())} · ${escapeHtml(m.time.toUpperCase())}</div><h1 id="module-title">${escapeHtml(m.title)}</h1><p>${escapeHtml(m.description)}</p><div class="chip-row"><span class="chip">One question at a time</span><span class="chip">Hindi feedback</span><span class="chip">Easy English answers</span></div></div>
     <div class="subsection"><h2>Try these questions</h2><div class="question-list">${questions}</div></div>
+    ${m.id==='sql'?renderSqlLab():''}
     <div class="coach-note"><strong>Coach tip:</strong> ${escapeHtml(m.coach)}</div>
     <div class="detail-actions"><button type="button" class="btn btn-primary" id="start-chat">Practice with ChatGPT ↗</button><button type="button" class="btn btn-secondary" id="copy-prompt">Copy full prompt</button><button type="button" class="btn btn-mint full-span" id="mark-done">✓ Mark practice complete (+10 XP)</button></div>
     <p class="helper-copy">ChatGPT opens separately. If the prompt is not prefilled on your device, tap “Copy full prompt” and paste it in ChatGPT.</p>`;
   document.getElementById('start-chat').addEventListener('click',()=>openChat(m));
+  if(m.id==='sql') initSqlLab();
   document.getElementById('copy-prompt').addEventListener('click',()=>copyPrompt(m));
   document.getElementById('mark-done').addEventListener('click',()=>markDone(m.id));
 }
@@ -116,7 +152,7 @@ function markDone(id){
   if(state.sessions.some(s=>s.moduleId===id&&s.date===date)){showToast('Ye practice area aaj complete ho chuka hai. Great work!');return;}
   state.sessions.push({moduleId:id,date,xp:10,at:new Date().toISOString()}); saveState(); renderAll(); showToast('Practice saved! +10 XP earned 🎉'); renderModule(id);
 }
-function renderPlan(){document.getElementById('plan-list').innerHTML=sevenDayPlan.map(p=>`<div class="plan-item"><div class="plan-day">${p.day}</div><div class="plan-copy"><strong>${escapeHtml(p.title)}</strong><small>${escapeHtml(p.desc)}</small></div><button type="button" data-plan-module="${p.module}" aria-label="Start ${escapeHtml(p.title)}">→</button></div>`).join('');}
+function renderPlan(){document.getElementById('plan-list').innerHTML=tenDayPlan.map((p,i)=>`<div class="plan-item"><div class="plan-day">${p.day.replace('DAY ','D')}</div><div class="plan-copy"><strong>${escapeHtml(p.title)}</strong><small>${escapeHtml(p.desc)}</small></div><button type="button" data-plan-module="${p.module}" data-plan-day="${i+1}" aria-label="Start ${escapeHtml(p.title)}">→</button></div>`).join('');}
 function renderProgress(){
   document.getElementById('progress-xp').textContent=`${getXp()} XP`;
   document.getElementById('progress-sessions').textContent=`${state.sessions.length} practice ${state.sessions.length===1?'session':'sessions'} completed`;
@@ -199,7 +235,9 @@ function showTab(tab){
 document.addEventListener('click',e=>{
   const tab=e.target.closest('[data-tab]'); if(tab){showTab(tab.dataset.tab);return;}
   const card=e.target.closest('[data-module]'); if(card){renderModule(card.dataset.module);showTab('module');return;}
-  const plan=e.target.closest('[data-plan-module]'); if(plan){renderModule(plan.dataset.planModule);showTab('module');return;}
+  const plan=e.target.closest('[data-plan-module]'); if(plan){renderModule(plan.dataset.planModule);showTab('module');if(plan.dataset.planDay&&plan.dataset.planModule==='sql'){const target=document.getElementById('sql-lab-title');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});}return;}
+  const sqlAction=e.target.closest('[data-sql-action]');
+  if(sqlAction){const lab=window.INTERVIEW_SQL_LAB;const ex=lab?.exercises?.find(item=>item.id===sqlAction.dataset.sqlId);if(!ex)return;const action=sqlAction.dataset.sqlAction;if(action==='copy'){copyText(ex.solution).then(ok=>showToast(ok?'SQL solution copied.':'Copy unavailable on this browser.'));return;}if(action==='save-attempt'){const input=document.getElementById(`sql-attempt-${ex.id}`);if(!input)return;state.sqlAttempts=state.sqlAttempts||{};state.sqlAttempts[ex.id]=String(input.value||'');saveState();showToast('SQL attempt saved on this device.');return;}const panel=document.getElementById(`${action==='hint'?'hint':'solution'}-${ex.id}`);if(!panel)return;const show=panel.hidden;panel.hidden=!show;sqlAction.setAttribute('aria-expanded',String(show));sqlAction.textContent=show?(action==='hint'?'Hide hint':'Hide solution'):(action==='hint'?'Show hint':'Show solution');return;}
   const qAction=e.target.closest('[data-q-action]');
   if(qAction){
     const q=getQuestions().find(item=>item.id===qAction.dataset.qId); if(!q)return;

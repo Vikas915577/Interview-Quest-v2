@@ -1,7 +1,7 @@
 {
-  "name": "Interview Quest V3 — Interview Preparation",
+  "name": "Interview Quest V3.1 — 500 Questions + SQL Lab",
   "short_name": "Interview Quest",
-  "description": "Free mobile-first interview practice with 300 questions, role filters, answers, revision bookmarks and ChatGPT shortcuts.",
+  "description": "Free mobile-first interview prep with 500 questions, SQL sample tables, 20 SQL exercises and a 10-day roadmap.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
