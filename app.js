@@ -9,7 +9,9 @@ const modules = [
   {id:'python',icon:'🐍',title:'Python & Pandas',category:'Technical',time:'15 min',short:'Basics, coding aur data cleaning questions.',description:'Python fundamentals aur practical Data Analyst coding tasks.',firstQuestion:'In Python, what is the difference between a list and a tuple?',questions:['What is the difference between a list and a tuple?','How would you find missing values in a Pandas DataFrame?','How can you remove duplicate rows from a DataFrame?'],coach:'Code ka output predict karna bhi practice ka part hai. Pehle apna attempt do.',prompt:'TUM MERE PYTHON AUR PANDAS INTERVIEW TRAINER HO. Variables, data types, conditions, lists, tuples, dictionaries, sets, loops, functions, strings, Pandas DataFrames, missing values, duplicate records, filtering, groupby, merge aur CSV reading practice karwao. Ek coding question ek time par. Pehle mujhse attempt lo, hints do, mistake explain karo, phir code ko simple Hindi mein line-by-line samjhao aur 10 mein score karo. Difficulty gradually badhao.'},
   {id:'english',icon:'🗣️',title:'English & Confidence',category:'Communication',time:'5–10 min',short:'Simple English bolna aur nervousness handle karna.',description:'Ratta nahi: short sentences, speaking drills aur answer-starting phrases.',firstQuestion:'In simple English, tell me about your day in three sentences.',questions:['Introduce yourself in simple English.','Explain your current job in three sentences.','Ask an interviewer to repeat a question politely.'],coach:'Pehle apni baat complete karo. Grammar ki correction baad mein karenge.',prompt:'TUM MERE ENGLISH SPEAKING AUR INTERVIEW CONFIDENCE COACH HO. Meri English weak hai aur interview mein nervous hota hoon. Goal fluent English overnight nahi, balki simple, clear interview English hai. Easy English mein baat karo, ek chhoti activity do, meri baat ka meaning samajhkar grammar correct karo, hard words ke simple alternatives do aur mujhe retry karne do. Daily self-introduction, simple sentences, Hindi-to-English, pronunciation guidance aur nervousness practice karwao. Judge mat karo, lambi grammar theory mat do.'},
   {id:'mock',icon:'🎯',title:'Full Mock Interview',category:'Interview simulation',time:'20 min',short:'HR + technical + project, real interview style.',description:'Complete interview simulation; final feedback end mein milega.',firstQuestion:'Hello. Please introduce yourself and walk me through your background.',questions:['Introduce yourself.','Explain one project you have worked on.','How would you investigate an unexpected change in a KPI?'],coach:'Real interview jaisa answer do. Complete mock ke end par score aur action plan lo.',prompt:'TUM EK REAL COMPANY KE INTERVIEWER HO AUR MERA FULL MOCK INTERVIEW CONDUCT KAR RAHE HO for Data Analyst/BI Analyst/MIS Reporting/Junior BI Developer. Rounds: introduction, HR, SQL, Excel/BI, project explanation, business scenario aur candidate questions. Ek baar mein sirf ek question; answer ka wait. Interview ke beech detailed corrections mat do; final mein communication, technical accuracy, clarity aur confidence alag score karo. Follow-ups realistic rakho. Resume facts invent mat karo. End par strengths, weak areas aur next plan do.'},
-  {id:'resume',icon:'🧾',title:'Resume & Project Answers',category:'Career',time:'10 min',short:'Current role aur projects confidently explain karo.',description:'Apne real work ko clear, structured interview answers mein explain karo.',firstQuestion:'Tell me about your current role as a Business Analyst Consultant.',questions:['Tell me about your current role and daily responsibilities.','Explain your latest project: problem, tools, process and outcome.','How do you check whether a report is accurate?'],coach:'Project ka problem → tumhara action → tool → verified result is order mein bolo.',prompt:'TUM MERE RESUME-BASED INTERVIEW COACH HO. Known background: B.Tech Computer Science; Business Analyst Consultant at AnalyticaOne; SQL, Infor Birst, Excel, Python/Pandas, Power BI ki knowledge; Data Analyst/BI roles mein interest. Current role, daily work, project, business problem, data/tools, validation, challenges aur personal contribution explain karne ki practice karwao. Pehle mujhse real details lo. Fake metrics, projects, responsibilities ya achievements invent mat karo. Simple professional English, 10-point score, Hindi feedback aur structure do.'}
+  {id:'resume',icon:'🧾',title:'Resume & Project Answers',category:'Career',time:'10 min',short:'Current role aur projects confidently explain karo.',description:'Apne real work ko clear, structured interview answers mein explain karo.',firstQuestion:'Tell me about your current role as a Business Analyst Consultant.',questions:['Tell me about your current role and daily responsibilities.','Explain your latest project: problem, tools, process and outcome.','How do you check whether a report is accurate?'],coach:'Project ka problem → tumhara action → tool → verified result is order mein bolo.',prompt:'TUM MERE RESUME-BASED INTERVIEW COACH HO. Known background: B.Tech Computer Science; Business Analyst Consultant at AnalyticaOne; SQL, Infor Birst, Excel, Python/Pandas, Power BI ki knowledge; Data Analyst/BI roles mein interest. Current role, daily work, project, business problem, data/tools, validation, challenges aur personal contribution explain karne ki practice karwao. Pehle mujhse real details lo. Fake metrics, projects, responsibilities ya achievements invent mat karo. Simple professional English, 10-point score, Hindi feedback aur structure do.'},
+  {id:'analytics-case',icon:'📈',title:'Data Analysis & Case Studies',category:'Business analytics',time:'15 min',short:'KPI changes, root-cause analysis, charts aur experiments.',description:'Business problem ko break down karo, right metric choose karo aur evidence-based insight explain karo.',firstQuestion:'Sales dropped by 12% this month. How would you investigate?',questions:['Sales dropped by 12% this month. How would you investigate?','Revenue increased but orders fell. What could explain it?','How would you define and validate a conversion rate?'],coach:'Pehle data aur metric definition validate karo, phir segments aur likely drivers investigate karo.',prompt:'TUM MERE DATA ANALYST CASE STUDY INTERVIEWER HO. KPI definition, revenue/sales analysis, funnel conversion, retention, churn, cohorts, segmentation, descriptive statistics, A/B testing basics, chart choice, data quality aur root-cause analysis par practical case questions poochho. Ek baar mein sirf ek question; mera answer lo, phir structured feedback, assumptions, calculations aur simple English sample answer do. Correlation ko causation mat bolo; fake outcomes invent mat karna.'},
+  {id:'ba-mis',icon:'🗂️',title:'Business Analyst & MIS Reporting',category:'Requirements & reporting',time:'12 min',short:'Requirements, acceptance criteria, reconciliations aur daily MIS.',description:'Stakeholder requests ko clear requirements aur accurate recurring reports mein convert karna seekho.',firstQuestion:'A manager asks for a report but has not explained what decision it should support. What do you ask?',questions:['How do you gather requirements for a new dashboard?','How do you reconcile reports from different branches?','What are acceptance criteria?'],coach:'Audience, decision, KPI definition, date range, freshness aur validation criteria clear karo.',prompt:'TUM MERE BUSINESS ANALYST AUR MIS/REPORTING INTERVIEW COACH HO. Requirement elicitation, user stories, acceptance criteria, As-Is/To-Be, stakeholder conflicts, reporting cadence, control totals, daily MIS, branch consolidation, Excel/Power Query automation aur reconciliation par ek-ek scenario question poochho. Pehle mera answer lo; phir 10 mein score, Hindi feedback, easy professional English answer aur follow-up do. Unsupported work experience ya results invent mat karna.'}
 ];
 
 const sevenDayPlan = [
@@ -43,7 +45,10 @@ function saveState(){
 }
 function localDateKey(date = new Date()) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
 function getModule(id){ return modules.find(m=>m.id===id) || modules[0]; }
-function getQuestions(){ return Array.isArray(window.INTERVIEW_QUESTIONS) ? window.INTERVIEW_QUESTIONS : []; }
+function getQuestions(){
+  if (!Array.isArray(window.INTERVIEW_QUESTIONS)) return [];
+  return window.INTERVIEW_QUESTIONS.filter(q => q && typeof q.id==='string' && typeof q.category==='string' && typeof q.question==='string' && typeof q.answer==='string' && q.question.trim() && q.answer.trim());
+}
 function getSessionsToday(){ const today=localDateKey(); return state.sessions.filter(s=>s.date===today); }
 function getDoneIdsToday(){ return new Set(getSessionsToday().map(s=>s.moduleId)); }
 function getXp(){ return state.sessions.reduce((sum,s)=>sum+(Number(s.xp)||10),0); }
@@ -117,6 +122,14 @@ function renderProgress(){
   document.getElementById('progress-sessions').textContent=`${state.sessions.length} practice ${state.sessions.length===1?'session':'sessions'} completed`;
   document.getElementById('progress-list').innerHTML=modules.map(m=>{const count=state.sessions.filter(s=>s.moduleId===m.id).length;const last=state.sessions.filter(s=>s.moduleId===m.id).sort((a,b)=>b.date.localeCompare(a.date))[0];return `<div class="progress-row"><span class="row-icon">${m.icon}</span><div class="row-main"><strong>${escapeHtml(m.title)}</strong><small>${last?`Last practiced ${escapeHtml(last.date)}`:'Not practiced yet'}</small></div><span class="row-count">${count} ${count===1?'time':'times'}</span></div>`;}).join('');
 }
+function populateQuestionRoles(){
+  const select=document.getElementById('question-role');
+  if(!select) return;
+  const current=select.value || 'all';
+  const roles=[...new Set(getQuestions().flatMap(q=>Array.isArray(q.roles)?q.roles:[]))].sort((a,b)=>a.localeCompare(b));
+  select.innerHTML='<option value="all">All roles</option>'+roles.map(role=>`<option value="${escapeHtml(role)}">${escapeHtml(role)}</option>`).join('');
+  if(roles.includes(current)) select.value=current;
+}
 function populateQuestionCategories(){
   const select=document.getElementById('question-category');
   const current=select.value || 'all';
@@ -127,15 +140,19 @@ function populateQuestionCategories(){
 function renderQuestionBank(){
   const questions=getQuestions();
   const search=(document.getElementById('question-search').value||'').trim().toLowerCase();
+  const role=document.getElementById('question-role')?.value || 'all';
   const category=document.getElementById('question-category').value;
   const difficulty=document.getElementById('question-difficulty').value;
   const type=document.getElementById('question-type').value;
+  const loadError=document.getElementById('question-load-error');
+  if(loadError) loadError.classList.toggle('hidden', questions.length>0);
   const filtered=questions.filter(q=>{
+    if(role!=='all'&&!(Array.isArray(q.roles)&&q.roles.includes(role)))return false;
     if(category!=='all'&&q.category!==category)return false;
     if(difficulty!=='all'&&q.difficulty!==difficulty)return false;
     if(type!=='all'&&q.type!==type)return false;
     if(showBookmarkedOnly&&!state.bookmarks.includes(q.id))return false;
-    const text=`${q.question} ${q.answer} ${q.tip} ${q.category} ${q.difficulty} ${q.type}`.toLowerCase();
+    const text=`${q.question} ${q.answer} ${q.tip} ${q.followUp||''} ${q.category} ${q.difficulty} ${q.type} ${(q.roles||[]).join(' ')}`.toLowerCase();
     return !search||text.includes(search);
   });
   document.getElementById('bank-total').textContent=questions.length;
@@ -150,12 +167,12 @@ function renderQuestionBank(){
       <div class="bank-card-top"><span class="bank-tag">${escapeHtml(q.category)}</span><span class="level-tag">${escapeHtml(q.difficulty)}</span><span class="type-tag">${escapeHtml(q.type)}</span><button class="save-q ${saved?'saved':''}" type="button" data-q-action="bookmark" data-q-id="${q.id}" aria-pressed="${saved}" aria-label="${saved?'Remove from':'Save to'} revision list">${saved?'★ Saved':'☆ Save'}</button></div>
       <h3>${escapeHtml(q.question)}</h3>
       <div class="bank-actions"><button class="btn btn-secondary" type="button" data-q-action="answer" data-q-id="${q.id}" aria-controls="${answerId}" aria-expanded="false">Show answer</button><button class="btn btn-primary" type="button" data-q-action="ask" data-q-id="${q.id}">Ask ChatGPT ↗</button><button class="btn btn-secondary" type="button" data-q-action="copy" data-q-id="${q.id}">Copy question</button></div>
-      <div class="answer-panel" id="${answerId}" hidden><strong>Suggested answer</strong><p>${escapeHtml(q.answer)}</p>${q.tip?`<strong>Interview tip</strong><p class="answer-tip">${escapeHtml(q.tip)}</p>`:''}${source}</div>
+      <div class="answer-panel" id="${answerId}" hidden><strong>Suggested answer</strong><p>${escapeHtml(q.answer)}</p>${q.tip?`<strong>Interview tip</strong><p class="answer-tip">${escapeHtml(q.tip)}</p>`:''}${q.followUp?`<strong>Follow-up practice</strong><p>${escapeHtml(q.followUp)}</p>`:''}${source}</div>
     </article>`;
   }).join('');
   document.getElementById('question-empty').classList.toggle('hidden',filtered.length>0);
 }
-function buildQuestionPrompt(q){return `You are my beginner-friendly Data Analyst / BI Analyst interview coach. Explain this interview question in simple English and Hinglish. Give a correct answer, step-by-step reasoning, a practical example, common mistakes, and one follow-up question. Do not invent facts or assume I have experience I have not stated.\n\nTopic: ${q.category}\nDifficulty: ${q.difficulty}\nQuestion: ${q.question}\n\nAfter explaining, ask me to answer in my own words and wait for my response.`;}
+function buildQuestionPrompt(q){return `You are my beginner-friendly Data Analyst / BI Analyst interview coach. Explain this interview question in simple English and Hinglish. Give a correct answer, step-by-step reasoning, a practical example or code where relevant, common mistakes, and one follow-up question. Do not invent facts or assume I have experience I have not stated.\n\nTarget roles: ${(q.roles||[]).join(', ')}\nTopic: ${q.category}\nDifficulty: ${q.difficulty}\nQuestion: ${q.question}\nSuggested answer from my study bank: ${q.answer}\nInterview tip: ${q.tip||'Explain the reasoning clearly.'}\nNext follow-up: ${q.followUp||'Ask a realistic follow-up about validation or edge cases.'}\n\nAfter explaining, ask me to answer in my own words and wait for my response.`;}
 function openQuestionChat(q){
   const prompt=buildQuestionPrompt(q);
   const url=`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
@@ -199,12 +216,12 @@ document.addEventListener('click',e=>{
 document.getElementById('start-today').addEventListener('click',()=>{const m=dailyModule();renderModule(m.id);showTab('module');});
 document.getElementById('back-to-practice').addEventListener('click',()=>showTab('practice'));
 document.getElementById('module-search').addEventListener('input',e=>renderAllModules(e.target.value));
-['question-search','question-category','question-difficulty','question-type'].forEach(id=>{
+['question-search','question-role','question-category','question-difficulty','question-type'].forEach(id=>{
   document.getElementById(id).addEventListener(id==='question-search'?'input':'change',renderQuestionBank);
 });
 document.getElementById('toggle-saved').addEventListener('click',()=>{showBookmarkedOnly=!showBookmarkedOnly;renderQuestionBank();});
 document.getElementById('reset-question-filters').addEventListener('click',()=>{
-  document.getElementById('question-search').value='';document.getElementById('question-category').value='all';document.getElementById('question-difficulty').value='all';document.getElementById('question-type').value='all';showBookmarkedOnly=false;renderQuestionBank();
+  document.getElementById('question-search').value='';document.getElementById('question-role').value='all';document.getElementById('question-category').value='all';document.getElementById('question-difficulty').value='all';document.getElementById('question-type').value='all';showBookmarkedOnly=false;renderQuestionBank();
 });
 document.getElementById('reset-progress').addEventListener('click',()=>{
   if(!state.sessions.length){showToast('Abhi reset karne ke liye progress nahi hai.');return;}
@@ -219,6 +236,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&document.getElementById('module-view').classList.contains('active'))showTab('practice');
 });
 
+populateQuestionRoles();
 populateQuestionCategories();
 renderAll();
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){

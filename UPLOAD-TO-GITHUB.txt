@@ -1,22 +1,14 @@
-INTERVIEW QUEST UPDATE — UPLOAD GUIDE
+INTERVIEW QUEST V3 — PHONE UPLOAD
 
-The ZIP includes the updated project files at its root. Upload/replace these files in the root of your existing GitHub repository:
+1. Download and extract Interview-Quest-v3.zip on your phone.
+2. Open your GitHub repository in a browser.
+3. Upload the CONTENTS of the extracted folder into the repository ROOT (main branch); do not create an extra nested folder.
+4. Replace the existing app files with the V3 files:
+   index.html, style.css, app.js, question-bank.js, sw.js, manifest.webmanifest, icon.svg, README.md, TEST-REPORT.md, validate-question-bank.js, smoke-test.js.
+5. Open Settings -> Pages. Source should be branch main and folder /(root).
+6. Wait until GitHub Pages reports the deployment is complete, then open the published site.
+7. If you still see the old bank, close the installed PWA, fully reload the browser tab and clear site data only if necessary.
 
-1. index.html
-2. style.css
-3. app.js
-4. question-bank.js (NEW FILE)
-5. sw.js
-6. manifest.webmanifest
-7. icon.svg
-8. README.md
-9. TEST-REPORT.md
+FREE/NO-KEY NOTE: The static app and all local features do not need a paid backend or OpenAI API key. The Ask ChatGPT shortcut opens the official ChatGPT website. It is not an embedded chat, and prompt prefilling depends on browser/site behavior.
 
-Do not upload them inside an extra nested folder. Keep them beside each other at repository root.
-
-GitHub Pages check:
-Repository → Settings → Pages → Deploy from a branch → main → /(root) → Save.
-
-After the deployment finishes, open the GitHub Pages URL. If the old interface remains visible, hard refresh and clear the site's cached data because this app uses a service worker.
-
-The app saves progress and bookmarks only in the current browser. There is no account sync/database in this static release.
+VALIDATION: Run `node validate-question-bank.js`, `node smoke-test.js` and `node --check app.js` / `node --check question-bank.js` / `node --check sw.js` when Node.js is available.

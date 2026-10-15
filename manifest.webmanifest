@@ -1,11 +1,18 @@
 {
-  "name": "Interview Quest — Interview Practice",
+  "name": "Interview Quest V3 — Interview Preparation",
   "short_name": "Interview Quest",
-  "description": "A mobile-first interview preparation app with question bank and ChatGPT shortcuts.",
+  "description": "Free mobile-first interview practice with 300 questions, role filters, answers, revision bookmarks and ChatGPT shortcuts.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b1120",
   "theme_color": "#101827",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

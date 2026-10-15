@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#101827" />
   <meta name="description" content="Interview Quest: mobile-first interview preparation, question bank, mock interviews and one-click ChatGPT support." />
-  <title>Interview Quest — Interview Practice</title>
+  <title>Interview Quest V3 — 300 Interview Questions</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
@@ -53,15 +53,17 @@
       </section>
 
       <section id="questions-view" class="view" aria-labelledby="questions-title">
-        <div class="page-heading"><p class="kicker">SEARCHABLE LEARNING LIBRARY</p><h1 id="questions-title">Interview question bank</h1><p>Answers ko samjho, phir apne words mein bolne ki practice karo. Saved questions isi browser mein store hote hain.</p></div>
-        <div class="bank-summary"><div><strong id="bank-total">100</strong><span>curated questions</span></div><div><strong id="bank-saved-count">0</strong><span>saved for revision</span></div><div><strong id="bank-visible-count">100</strong><span>currently shown</span></div></div>
+        <div class="page-heading"><p class="kicker">SEARCHABLE LEARNING LIBRARY</p><h1 id="questions-title">Interview question bank</h1><p>300 curated questions across 13 topics. Role, difficulty, topic aur question type ke hisaab se filter karo; answers, tips aur follow-ups se practice karo. Saved questions isi browser mein store hote hain.</p></div>
+        <div class="bank-summary"><div><strong id="bank-total">300</strong><span>curated questions</span></div><div><strong id="bank-saved-count">0</strong><span>saved for revision</span></div><div><strong id="bank-visible-count">300</strong><span>currently shown</span></div></div>
         <label class="search-box"><span aria-hidden="true">⌕</span><input id="question-search" type="search" placeholder="Search a question, answer, keyword..." autocomplete="off" /><kbd>/</kbd></label>
         <div class="filter-grid">
+          <label>Target role<select id="question-role"><option value="all">All roles</option></select></label>
           <label>Topic<select id="question-category"><option value="all">All topics</option></select></label>
           <label>Difficulty<select id="question-difficulty"><option value="all">All levels</option><option>Beginner</option><option>Intermediate</option><option>Interview</option></select></label>
-          <label>Question type<select id="question-type"><option value="all">All types</option><option>Concept</option><option>Practical</option><option>Scenario</option><option>Behavioral</option><option>Communication</option></select></label>
+          <label>Question type<select id="question-type"><option value="all">All types</option><option>Concept</option><option>Practical</option><option>Scenario</option><option>Behavioral</option><option>Communication</option><option>Technical</option></select></label>
         </div>
         <div class="bank-toolbar"><button id="toggle-saved" class="btn btn-secondary" type="button">☆ Show saved only</button><button id="reset-question-filters" class="text-button" type="button">Reset filters</button></div>
+        <div id="question-load-error" class="empty-state load-warning hidden" role="alert">The question bank could not be loaded. Reload this page once. Make sure <code>question-bank.js</code> is in the same folder as <code>index.html</code>. Practice modules may still work.</div>
         <div id="question-bank-list" class="bank-list"></div>
         <p id="question-empty" class="empty-state hidden">No questions match these filters. Search another word or reset filters.</p>
         <div class="references-card"><strong>Learning references</strong><p>Core technical explanations use official documentation where possible. Interview prompts are practice material, not guaranteed employer questions.</p><div class="reference-links"><a href="https://www.postgresql.org/docs/current/tutorial.html" target="_blank" rel="noopener noreferrer">SQL · PostgreSQL ↗</a><a href="https://support.microsoft.com/en-us/excel/functions/xlookup-function" target="_blank" rel="noopener noreferrer">Excel · Microsoft ↗</a><a href="https://learn.microsoft.com/en-us/power-bi/transform-model/" target="_blank" rel="noopener noreferrer">Power BI · Microsoft Learn ↗</a><a href="https://pandas.pydata.org/docs/user_guide/" target="_blank" rel="noopener noreferrer">pandas docs ↗</a><a href="https://docs.infor.com/birst/latest/en-us/birstolh/default.html" target="_blank" rel="noopener noreferrer">Infor Birst docs ↗</a></div></div>
